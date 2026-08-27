@@ -1,0 +1,26 @@
+.chip-estado {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-full);
+  font-size: var(--fs-label-md);
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.chip-estado--realizado {
+  background-color: var(--color-accent-positivo);
+  color: var(--color-primary-container);
+}
+
+.chip-estado--en-proceso {
+  background-color: var(--color-accent-secundario);
+  color: var(--color-on-primary);
+}
+
+.chip-estado--pendiente {
+  background-color: var(--color-secondary-container);
+  color: var(--color-on-secondary);
+}

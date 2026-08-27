@@ -1,0 +1,118 @@
+.turno-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.turno-form__error {
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-default);
+  background-color: var(--color-error-container);
+  color: var(--color-on-error-container);
+  font-size: var(--fs-label-md);
+  line-height: var(--lh-label-md);
+}
+
+.asignacion {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: 0;
+  border: 0;
+}
+
+.asignacion__leyenda {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-sm);
+  padding: 0;
+  margin-bottom: var(--space-sm);
+  font-size: var(--fs-label-bold);
+  font-weight: 700;
+  color: var(--color-on-surface-variant);
+}
+
+.asignacion__contador {
+  font-weight: 400;
+  color: var(--color-outline);
+}
+
+.asignacion__vacio {
+  font-size: var(--fs-label-md);
+  color: var(--color-outline);
+}
+
+.asignacion__lista {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  max-height: 24rem;
+  overflow-y: auto;
+  padding: var(--space-xs);
+  list-style: none;
+}
+
+.asignacion__item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  border: 0.1rem solid var(--color-outline-variant);
+  border-radius: var(--radius-default);
+  background-color: var(--color-surface-container-lowest);
+  cursor: pointer;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.asignacion__item--activo {
+  border-color: var(--color-accent-secundario);
+  background-color: rgba(87, 182, 178, 0.1);
+}
+
+.asignacion__seleccion {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  cursor: pointer;
+}
+
+.asignacion__check {
+  width: 1.8rem;
+  height: 1.8rem;
+  margin-top: 0.2rem;
+  flex-shrink: 0;
+  accent-color: var(--color-secondary-container);
+  cursor: pointer;
+}
+
+.asignacion__nombre {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  font-size: var(--fs-body-md);
+  color: var(--color-on-surface);
+}
+
+.asignacion__detalle {
+  font-size: var(--fs-label-md);
+  color: var(--color-on-surface-variant);
+}
+
+.asignacion__km {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding-left: 2.6rem;
+}
+
+.asignacion__responsable-unico {
+  font-size: var(--fs-label-md);
+  color: var(--color-on-surface-variant);
+}
+
+/* El checkbox del inspector vive dentro de la propia etiqueta clicable */
+label.asignacion__item {
+  flex-direction: row;
+  align-items: center;
+}

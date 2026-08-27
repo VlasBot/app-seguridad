@@ -1,0 +1,17 @@
+.bitacora {
+  max-width: 60rem;
+  margin: 0 auto;
+}
+
+.bitacora__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.bitacora__titulo {
+  font-size: var(--fs-headline-lg);
+  line-height: var(--lh-headline-lg);
+  color: var(--color-primary-container);
+  margin-bottom: var(--space-lg);
+}

@@ -1,0 +1,53 @@
+.mi-turno {
+  max-width: 60rem;
+  margin: 0 auto;
+}
+
+.mi-turno__tarjeta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.mi-turno__titulo {
+  font-size: var(--fs-headline-lg);
+  line-height: var(--lh-headline-lg);
+}
+
+.mi-turno__detalle {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  font-size: var(--fs-body-lg);
+}
+
+.mi-turno__detalle-fila {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--space-sm) 0;
+  border-bottom: 0.1rem solid rgba(255, 255, 255, 0.15);
+}
+
+.mi-turno__etiqueta {
+  opacity: 0.8;
+}
+
+.mi-turno__acciones {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.mi-turno__lista {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  list-style: none;
+  text-align: right;
+}
+
+.mi-turno__km {
+  display: block;
+  font-size: var(--fs-label-md);
+  opacity: 0.75;
+}

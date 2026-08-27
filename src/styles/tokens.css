@@ -1,0 +1,85 @@
+:root {
+  /* Truco 62.5%: 1rem = 10px sobre el tamaño de fuente por defecto del navegador (16px) */
+  font-size: 62.5%;
+
+  /* Colores oficiales Municipalidad de Calle Larga */
+  --color-primary-container: #06262d;
+  --color-primary: #000e13;
+  --color-on-primary: #ffffff;
+  --color-primary-fixed: #c9e8f1;
+  --color-on-primary-fixed-variant: #2f4b53;
+
+  --color-secondary-container: #df1683;
+  --color-secondary: #b40067;
+  --color-on-secondary: #ffffff;
+  --color-secondary-fixed: #ffd9e4;
+  --color-on-secondary-fixed-variant: #8d0050;
+
+  --color-accent-positivo: #80bc00;
+  --color-accent-positivo-dim: #679800;
+  --color-accent-secundario: #57b6b2;
+
+  --color-error: #ba1a1a;
+  --color-on-error: #ffffff;
+  --color-error-container: #ffdad6;
+  --color-on-error-container: #93000a;
+
+  /* Superficies / neutros */
+  --color-surface: #faf9f9;
+  --color-surface-dim: #dadada;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #f4f3f3;
+  --color-surface-container: #eeeeee;
+  --color-surface-container-high: #e9e8e8;
+  --color-surface-container-highest: #e3e2e2;
+  --color-on-surface: #1a1c1c;
+  --color-on-surface-variant: #41484a;
+  --color-outline: #72787a;
+  --color-outline-variant: #c1c7ca;
+
+  /* Tipografía (pila de fuentes de sistema, sin CDN externo) */
+  --font-family-base: 'Public Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Helvetica, Arial, sans-serif;
+
+  --fs-headline-xl: 4.8rem;
+  --lh-headline-xl: 5.6rem;
+  --fs-headline-lg: 3.2rem;
+  --lh-headline-lg: 4rem;
+  --fs-headline-lg-mobile: 2.4rem;
+  --lh-headline-lg-mobile: 3.2rem;
+  --fs-headline-md: 2.4rem;
+  --lh-headline-md: 3.2rem;
+  --fs-body-lg: 1.8rem;
+  --lh-body-lg: 2.8rem;
+  --fs-body-md: 1.6rem;
+  --lh-body-md: 2.4rem;
+  --fs-label-bold: 1.4rem;
+  --lh-label-bold: 2rem;
+  --fs-label-md: 1.4rem;
+  --lh-label-md: 2rem;
+
+  /* Radios */
+  --radius-sm: 0.25rem;
+  --radius-default: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-full: 9999px;
+
+  /* Spacing (base 8px) */
+  --space-xs: 0.4rem;
+  --space-sm: 0.8rem;
+  --space-md: 1.6rem;
+  --space-lg: 2.4rem;
+  --space-xl: 4rem;
+
+  /* Layout */
+  --sidebar-width: 24rem;
+  --header-height: 6.4rem;
+  --content-max-width: 192rem;
+
+  /* Elevación */
+  --shadow-ambient: 0 0.4rem 2rem -0.4rem rgba(0, 14, 19, 0.05);
+  --shadow-active: 0 0.4rem 1.2rem rgba(0, 14, 19, 0.1);
+  --shadow-elevated: 0 0.8rem 2.4rem rgba(0, 14, 19, 0.15);
+}

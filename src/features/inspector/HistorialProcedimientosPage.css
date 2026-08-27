@@ -1,0 +1,101 @@
+.historial__cabecera {
+  margin-bottom: var(--space-lg);
+}
+
+.historial__titulo {
+  font-size: var(--fs-headline-md);
+  color: var(--color-primary-container);
+}
+
+.historial__subtitulo {
+  font-size: var(--fs-body-md);
+  color: var(--color-on-surface-variant);
+  margin-top: var(--space-xs);
+}
+
+.historial__buscador {
+  position: relative;
+  margin-bottom: var(--space-md);
+}
+
+.historial__buscador-icono {
+  position: absolute;
+  left: var(--space-sm);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-on-surface-variant);
+  pointer-events: none;
+}
+
+.historial__buscador-campo {
+  width: 100%;
+  min-height: 4.8rem;
+  padding: var(--space-sm) var(--space-md) var(--space-sm) 4.4rem;
+  border-radius: var(--radius-full);
+  border: 0.1rem solid var(--color-outline-variant);
+  background-color: var(--color-surface-container-low);
+  font-size: var(--fs-body-md);
+}
+
+.historial__buscador-campo:focus {
+  outline: none;
+  border-color: var(--color-primary-container);
+}
+
+.historial__ver-detalle {
+  color: var(--color-primary-container);
+  font-size: var(--fs-label-md);
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.tabla-historial {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.tabla-historial td {
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+.tabla-historial th {
+  white-space: normal;
+  overflow-wrap: normal;
+  word-break: keep-all;
+}
+
+.tabla-historial th:nth-child(1),
+.tabla-historial td:nth-child(1) {
+  width: 13%;
+}
+
+.tabla-historial th:nth-child(2),
+.tabla-historial td:nth-child(2) {
+  width: 20%;
+}
+
+.tabla-historial th:nth-child(3),
+.tabla-historial td:nth-child(3) {
+  width: 16%;
+}
+
+.tabla-historial th:nth-child(4),
+.tabla-historial td:nth-child(4) {
+  width: 14%;
+}
+
+.tabla-historial th:nth-child(5),
+.tabla-historial td:nth-child(5) {
+  width: 8%;
+}
+
+.tabla-historial th:nth-child(6),
+.tabla-historial td:nth-child(6) {
+  width: 12%;
+}
+
+.tabla-historial th:nth-child(7),
+.tabla-historial td:nth-child(7) {
+  width: 17%;
+}

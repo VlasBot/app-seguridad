@@ -1,0 +1,48 @@
+.reportes-cabecera {
+  font-size: var(--fs-headline-md);
+  color: var(--color-primary-container);
+  margin-bottom: var(--space-md);
+}
+
+.reportes-filtros {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.reportes-filtros__acciones {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-sm);
+}
+
+.tabla-reportes th:nth-child(1),
+.tabla-reportes td:nth-child(1) {
+  width: 13%;
+}
+
+.tabla-reportes th:nth-child(2),
+.tabla-reportes td:nth-child(2) {
+  width: 20%;
+}
+
+.tabla-reportes th:nth-child(3),
+.tabla-reportes td:nth-child(3) {
+  width: 16%;
+}
+
+.tabla-reportes th:nth-child(4),
+.tabla-reportes td:nth-child(4) {
+  width: 27%;
+}
+
+.tabla-reportes th:nth-child(5),
+.tabla-reportes td:nth-child(5) {
+  width: 12%;
+}
+
+.tabla-reportes th:nth-child(6),
+.tabla-reportes td:nth-child(6) {
+  width: 12%;
+}

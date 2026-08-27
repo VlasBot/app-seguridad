@@ -1,0 +1,137 @@
+.kpi {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-md);
+  min-height: 15rem;
+}
+
+.kpi__cabecera {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+
+.kpi__etiqueta {
+  font-size: var(--fs-label-md);
+  color: var(--color-on-surface-variant);
+  margin-bottom: var(--space-xs);
+}
+
+.kpi__valor {
+  font-size: var(--fs-headline-xl);
+  line-height: var(--lh-headline-xl);
+  color: var(--color-primary-container);
+}
+
+.tarjeta--oscura .kpi__etiqueta {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.tarjeta--oscura .kpi__valor {
+  color: var(--color-on-primary);
+}
+
+.kpi__icono {
+  width: 4rem;
+  height: 4rem;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-primary-fixed);
+  color: var(--color-on-primary-fixed-variant);
+  flex-shrink: 0;
+}
+
+.tarjeta--oscura .kpi__icono {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: var(--color-on-primary);
+}
+
+.kpi__pie {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: var(--fs-label-md);
+}
+
+.kpi__tendencia-positiva {
+  color: var(--color-accent-positivo-dim);
+  font-weight: 700;
+}
+
+.kpi__barra-fondo {
+  width: 100%;
+  height: 0.8rem;
+  background-color: var(--color-surface-container-high);
+  border-radius: var(--radius-full);
+}
+
+.kpi__barra-relleno {
+  height: 100%;
+  background-color: var(--color-secondary-container);
+  border-radius: var(--radius-full);
+}
+
+.kpi__punto-vivo {
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: var(--radius-full);
+  background-color: var(--color-accent-positivo);
+}
+
+.kpi__estados {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.kpi__estado-fila {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: var(--fs-body-md);
+}
+
+.kpi__estado-punto {
+  width: 1rem;
+  height: 1rem;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+
+.kpi__estado-punto--pendiente {
+  background-color: var(--color-secondary-container);
+}
+
+.kpi__estado-punto--en-proceso {
+  background-color: var(--color-accent-secundario);
+}
+
+.kpi__estado-punto--realizado {
+  background-color: var(--color-accent-positivo);
+}
+
+.kpi__estado-nombre {
+  color: var(--color-on-surface-variant);
+  flex: 1;
+}
+
+.kpi__estado-cantidad {
+  font-size: var(--fs-headline-md);
+  font-weight: 700;
+  color: var(--color-primary-container);
+}
+
+.tarjeta--oscura .kpi__estado-nombre {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.tarjeta--oscura .kpi__estado-cantidad {
+  color: var(--color-on-primary);
+}

@@ -1,0 +1,21 @@
+.spinner-contenedor {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xl);
+}
+
+.spinner {
+  width: 4rem;
+  height: 4rem;
+  border-radius: var(--radius-full);
+  border: 0.4rem solid var(--color-surface-container-high);
+  border-top-color: var(--color-primary-container);
+  animation: girar 0.8s linear infinite;
+}
+
+@keyframes girar {
+  to {
+    transform: rotate(360deg);
+  }
+}

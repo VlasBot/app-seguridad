@@ -1,0 +1,149 @@
+.tabla-contenedor {
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+}
+
+.tabla {
+  width: 100%;
+  table-layout: fixed;
+  text-align: left;
+}
+
+.tabla thead tr {
+  background-color: var(--color-primary-container);
+}
+
+.tabla th {
+  padding: var(--space-md);
+  font-size: var(--fs-label-md);
+  font-weight: 700;
+  letter-spacing: 0.05rem;
+  text-transform: uppercase;
+  color: var(--color-on-primary);
+  white-space: normal;
+  /* Los encabezados son palabras cortas fijas (no datos de usuario): que
+     partan de línea entre palabras está bien, pero nunca a mitad de palabra. */
+  overflow-wrap: normal;
+  word-break: keep-all;
+}
+
+.tabla td {
+  padding: var(--space-md);
+  font-size: var(--fs-body-md);
+  color: var(--color-on-surface);
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+.tabla tbody tr {
+  border-bottom: 0.1rem solid var(--color-outline-variant);
+  transition: background-color 0.15s ease;
+}
+
+.tabla tbody tr:hover {
+  background-color: var(--color-surface-container-lowest);
+}
+
+.tabla__col-derecha {
+  text-align: right;
+}
+
+/*
+ * Con 6-8 columnas no hay forma de que quepan lado a lado en un teléfono sin
+ * partir cada palabra letra por letra. Por eso, bajo cierto ancho, la tabla
+ * deja de comportarse como tabla: cada fila pasa a ser una tarjeta y cada
+ * celda ocupa el ancho completo, con su etiqueta de columna encima (tomada
+ * del atributo `data-label` que pone cada página). Así cada dato tiene todo
+ * el ancho de la pantalla para acomodarse.
+ */
+@media (max-width: 1024px) {
+  .tabla thead {
+    position: absolute;
+    width: 0.1rem;
+    height: 0.1rem;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .tabla,
+  .tabla tbody,
+  .tabla tbody tr,
+  .tabla td {
+    display: block;
+    /* Gana a los anchos por columna (nth-child) de cada página: en este
+       modo cada celda debe ocupar todo el ancho, sin excepción. */
+    width: 100% !important;
+  }
+
+  .tabla tbody tr {
+    padding: var(--space-sm) var(--space-md);
+  }
+
+  .tabla td {
+    padding: var(--space-xs) 0;
+    text-align: left;
+  }
+
+  .tabla td::before {
+    content: attr(data-label);
+    display: block;
+    font-size: var(--fs-label-md);
+    font-weight: 700;
+    letter-spacing: 0.05rem;
+    text-transform: uppercase;
+    color: var(--color-on-surface-variant);
+    margin-bottom: var(--space-xs);
+  }
+
+  .tabla__col-derecha {
+    text-align: left;
+  }
+}
+
+/*
+ * La tabla de Procedimientos tiene 8 columnas (más que el resto). Con el
+ * menú lateral visible, entre 1024px y 1280px no alcanza el espacio para que
+ * todas las columnas muestren su contenido sin apretarse, así que esta tabla
+ * pasa a la vista de tarjetas un poco antes que las demás.
+ */
+@media (max-width: 1280px) {
+  .tabla--denso thead {
+    position: absolute;
+    width: 0.1rem;
+    height: 0.1rem;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .tabla--denso,
+  .tabla--denso tbody,
+  .tabla--denso tbody tr,
+  .tabla--denso td {
+    display: block;
+    width: 100% !important;
+  }
+
+  .tabla--denso tbody tr {
+    padding: var(--space-sm) var(--space-md);
+  }
+
+  .tabla--denso td {
+    padding: var(--space-xs) 0;
+    text-align: left;
+  }
+
+  .tabla--denso td::before {
+    content: attr(data-label);
+    display: block;
+    font-size: var(--fs-label-md);
+    font-weight: 700;
+    letter-spacing: 0.05rem;
+    text-transform: uppercase;
+    color: var(--color-on-surface-variant);
+    margin-bottom: var(--space-xs);
+  }
+}

@@ -1,0 +1,64 @@
+.login-pagina {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-primary-container);
+  padding: var(--space-lg);
+}
+
+.login-tarjeta {
+  width: 100%;
+  max-width: 42rem;
+  background-color: var(--color-surface);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-elevated);
+  padding: var(--space-xl);
+}
+
+.login-marca {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-xl);
+  text-align: center;
+}
+
+.login-marca__logo {
+  width: 6.4rem;
+  height: 6.4rem;
+  border-radius: var(--radius-full);
+  background-color: var(--color-primary-container);
+  color: var(--color-on-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fs-headline-md);
+  font-weight: 700;
+}
+
+.login-marca__titulo {
+  font-size: var(--fs-headline-lg);
+  line-height: var(--lh-headline-lg);
+  color: var(--color-primary-container);
+}
+
+.login-marca__subtitulo {
+  font-size: var(--fs-body-md);
+  color: var(--color-on-surface-variant);
+}
+
+.login-formulario {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.login-error {
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-default);
+  background-color: var(--color-error-container);
+  color: var(--color-on-error-container);
+  font-size: var(--fs-label-md);
+}

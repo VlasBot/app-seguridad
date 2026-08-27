@@ -1,0 +1,75 @@
+.fin-turno {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.fin-turno__error {
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-default);
+  background-color: var(--color-error-container);
+  color: var(--color-on-error-container);
+  font-size: var(--fs-label-md);
+  line-height: var(--lh-label-md);
+}
+
+.fin-turno__vehiculos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: 0;
+  border: 0;
+}
+
+.fin-turno__leyenda {
+  padding: 0;
+  margin-bottom: var(--space-xs);
+  font-size: var(--fs-label-bold);
+  font-weight: 700;
+  color: var(--color-on-surface-variant);
+}
+
+.fin-turno__nota {
+  font-size: var(--fs-label-md);
+  line-height: var(--lh-label-md);
+  color: var(--color-outline);
+}
+
+.fin-turno__lista {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  list-style: none;
+}
+
+.fin-turno__vehiculo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding: var(--space-md);
+  border: 0.1rem solid var(--color-outline-variant);
+  border-radius: var(--radius-default);
+  background-color: var(--color-surface-container-lowest);
+}
+
+.fin-turno__vehiculo--cerrado {
+  background-color: transparent;
+  border-style: dashed;
+}
+
+.fin-turno__recorrido {
+  font-size: var(--fs-label-md);
+  font-weight: 700;
+  color: var(--color-accent-secundario);
+}
+
+.fin-turno__patente {
+  font-size: var(--fs-body-md);
+  font-weight: 700;
+  color: var(--color-on-surface);
+}
+
+.fin-turno__detalle {
+  font-size: var(--fs-label-md);
+  color: var(--color-on-surface-variant);
+}

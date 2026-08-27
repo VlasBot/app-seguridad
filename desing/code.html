@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dashboard - Gestión de Seguridad | Calle Larga</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary-fixed-dim": "#adccd5",
+                        "on-primary-fixed-variant": "#2f4b53",
+                        "secondary": "#b40067",
+                        "error-container": "#ffdad6",
+                        "outline": "#72787a",
+                        "tertiary-container": "#172700",
+                        "primary-container": "#06262d",
+                        "inverse-on-surface": "#f1f0f1",
+                        "surface": "#faf9f9",
+                        "on-secondary-container": "#fffbff",
+                        "inverse-primary": "#adccd5",
+                        "surface-container-high": "#e9e8e8",
+                        "outline-variant": "#c1c7ca",
+                        "surface-tint": "#46636b",
+                        "on-error": "#ffffff",
+                        "background": "#faf9f9",
+                        "secondary-fixed-dim": "#ffb0cb",
+                        "primary-fixed": "#c9e8f1",
+                        "surface-dim": "#dadada",
+                        "on-primary-fixed": "#001f26",
+                        "secondary-fixed": "#ffd9e4",
+                        "primary": "#000e13",
+                        "inverse-surface": "#2f3131",
+                        "secondary-container": "#de1482",
+                        "on-secondary-fixed-variant": "#8d0050",
+                        "on-tertiary-fixed": "#121f00",
+                        "tertiary": "#070f00",
+                        "on-tertiary-fixed-variant": "#334f00",
+                        "on-secondary-fixed": "#3e0020",
+                        "on-surface-variant": "#41484a",
+                        "surface-container-low": "#f4f3f3",
+                        "tertiary-fixed": "#b5f64a",
+                        "surface-variant": "#e3e2e2",
+                        "surface-container-lowest": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "on-tertiary": "#ffffff",
+                        "surface-container": "#eeeeee",
+                        "tertiary-fixed-dim": "#9ad92e",
+                        "on-primary-container": "#718e97",
+                        "on-secondary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "on-surface": "#1a1c1c",
+                        "error": "#ba1a1a",
+                        "on-tertiary-container": "#679800",
+                        "surface-container-highest": "#e3e2e2",
+                        "on-background": "#1a1c1c",
+                        "surface-bright": "#faf9f9"
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        full: "9999px"
+                    },
+                    spacing: {
+                        xs: "4px",
+                        base: "8px",
+                        xl: "40px",
+                        md: "16px",
+                        sm: "8px",
+                        lg: "24px",
+                        "grid-gutter": "16px",
+                        "grid-margin": "24px"
+                    },
+                    fontFamily: {
+                        "headline-lg": ["Public Sans"],
+                        "label-bold": ["Public Sans"],
+                        "headline-md": ["Public Sans"],
+                        "label-md": ["Public Sans"],
+                        "body-lg": ["Public Sans"],
+                        "body-md": ["Public Sans"],
+                        "headline-lg-mobile": ["Public Sans"],
+                        "headline-xl": ["Public Sans"]
+                    },
+                    fontSize: {
+                        "headline-lg": ["32px", { lineHeight: "40px", letterSpacing: "-0.01em", fontWeight: "700" }],
+                        "label-bold": ["14px", { lineHeight: "20px", fontWeight: "700" }],
+                        "headline-md": ["24px", { lineHeight: "32px", fontWeight: "600" }],
+                        "label-md": ["14px", { lineHeight: "20px", fontWeight: "500" }],
+                        "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+                        "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+                        "headline-lg-mobile": ["24px", { lineHeight: "32px", fontWeight: "700" }],
+                        "headline-xl": ["48px", { lineHeight: "56px", letterSpacing: "-0.02em", fontWeight: "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: #faf9f9; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0; }
+        .material-symbols-outlined.fill { font-variation-settings: 'FILL' 1; }
+        
+        /* Ambient shadows for cards */
+        .card-ambient {
+            box-shadow: 0 4px 20px -4px rgba(0, 14, 19, 0.05);
+        }
+    </style>
+</head>
+<body class="text-on-background font-body-md overflow-x-hidden flex antialiased">
+<!-- SideNavBar -->
+<nav class="h-full w-64 fixed left-0 top-0 bg-surface border-r border-outline-variant flex flex-col py-lg z-40">
+<div class="px-md mb-xl flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-on-primary font-bold overflow-hidden shrink-0">
+<img alt="Municipalidad de Calle Larga Logo" class="w-full h-full object-cover" data-alt="Official municipal crest or minimalist crest-like logo for Calle Larga Public Safety. Professional, serious tone. Dark navy primary color with crisp white lines. High contrast, clean vector style aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCHE1qIN_YYqM_CBFgoJ6QfuR-5LKBMewpEzFKJ--ZAZx1W7fWcsg1i6xNISnGejpWrKvW0wwWt8JQj-bPLLRWM2RuiIyI4vcQDS3w58ijkQun5eQVfDgqd7Q2kuTSTPLdxF2-qwK1vh5Jar0C8b6bIhKUquqGKxhBsol0QDKIepbyuFo9IqnH6BJzYbIVL0KBV70MThdgiQyFhqn6Dl6u43o5b4D33UmU4k0orVX5PFyg4YxRfS6z-g"/>
+</div>
+<div>
+<h1 class="font-headline-md text-headline-md font-bold text-primary">Calle Larga</h1>
+<p class="font-label-md text-label-md text-on-surface-variant">Seguridad Pública</p>
+</div>
+</div>
+<ul class="flex flex-col gap-sm px-sm flex-1">
+<li>
+<a class="flex items-center gap-md px-md py-3 rounded-lg text-primary font-bold bg-surface-container hover:bg-surface-container-high transition-colors active:scale-[0.98] transition-all duration-150 border-r-4 border-primary" href="#">
+<span class="material-symbols-outlined fill text-xl">dashboard</span>
+<span class="font-label-bold text-label-bold">Dashboard</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-md px-md py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors active:scale-[0.98] transition-all duration-150 border-r-4 border-transparent" href="#">
+<span class="material-symbols-outlined text-xl">assignment</span>
+<span class="font-label-bold text-label-bold">Procedimientos</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-md px-md py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors active:scale-[0.98] transition-all duration-150 border-r-4 border-transparent" href="#">
+<span class="material-symbols-outlined text-xl">local_shipping</span>
+<span class="font-label-bold text-label-bold">Flota</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-md px-md py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors active:scale-[0.98] transition-all duration-150 border-r-4 border-transparent" href="#">
+<span class="material-symbols-outlined text-xl">group</span>
+<span class="font-label-bold text-label-bold">Usuarios</span>
+</a>
+</li>
+</ul>
+<div class="mt-auto pt-lg border-t border-outline-variant px-sm">
+<ul class="flex flex-col gap-sm">
+<li>
+<a class="flex items-center gap-md px-md py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">settings</span>
+<span class="font-label-bold text-label-bold">Ajustes</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-md px-md py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">logout</span>
+<span class="font-label-bold text-label-bold">Cerrar Sesión</span>
+</a>
+</li>
+</ul>
+</div>
+</nav>
+<!-- Main Content Wrapper -->
+<div class="flex-1 ml-64 flex flex-col min-h-screen">
+<!-- TopNavBar -->
+<header class="bg-surface docked full-width top-0 sticky z-50 border-b border-outline-variant shadow-sm flex justify-between items-center w-full px-lg py-sm">
+<div class="flex items-center gap-lg">
+<h2 class="font-headline-lg text-headline-lg font-black text-primary">Gestión de Seguridad</h2>
+<div class="relative hidden lg:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-full font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary w-64 transition-all" placeholder="Buscar procedimiento, patente..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="p-2 rounded-full text-on-surface-variant hover:bg-surface-container transition-all active:opacity-80 duration-200 relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1 right-2 w-2 h-2 bg-secondary-container rounded-full"></span>
+</button>
+<button class="p-2 rounded-full text-on-surface-variant hover:bg-surface-container transition-all active:opacity-80 duration-200">
+<span class="material-symbols-outlined">help</span>
+</button>
+<div class="h-6 w-px bg-outline-variant mx-2"></div>
+<button class="flex items-center gap-sm p-1 pr-3 rounded-full border border-outline-variant hover:bg-surface-container transition-all active:opacity-80 duration-200">
+<img alt="Avatar del Usuario" class="w-8 h-8 rounded-full object-cover bg-surface-dim" data-alt="Professional portrait of a male public safety officer in dark navy uniform. Clean shaven, serious expression. Neutral grey background. Corporate modern aesthetic, high resolution." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6g7nqS5NQBALlQ7-_7JQC8SuAeFGVJ3B292dS7FxH5gTHacTzdugPQ7tFs-VLu980sNwN0wjgbky6IA7OXDGkMwa9gl9KaCE984T8KUI-C9hkh2uk6wADAS_GrjwKQije9lOU-T2fW8WxGBvDOW5kLM2phBjou-VSzkQTUvveDVwF_3RBSdeX0b-XEDs_NqvdTgJDT-LN_BiLGbFUH22NnU6J2VUWGYSJsvyc7s_K5Sib-vntPyYd5A"/>
+<span class="font-label-md text-label-md text-primary">Perfil</span>
+</button>
+</div>
+</header>
+<!-- Canvas -->
+<main class="flex-1 p-lg max-w-[1440px] mx-auto w-full">
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-grid-gutter auto-rows-min">
+<!-- KPI: Total Procedures -->
+<div class="col-span-1 md:col-span-4 bg-surface rounded-xl border border-outline-variant p-lg card-ambient flex flex-col justify-between">
+<div class="flex justify-between items-start mb-md">
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant mb-1">Procedimientos (Mes)</p>
+<h3 class="font-headline-xl text-headline-xl text-primary">482</h3>
+</div>
+<div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center text-on-primary-fixed-variant">
+<span class="material-symbols-outlined">analytics</span>
+</div>
+</div>
+<div class="flex items-center gap-xs text-sm">
+<span class="material-symbols-outlined text-[16px] text-tertiary-fixed-dim">trending_up</span>
+<span class="font-label-bold text-tertiary-fixed-dim">+12%</span>
+<span class="text-on-surface-variant ml-1">vs mes anterior</span>
+</div>
+</div>
+<!-- KPI: Pending -->
+<div class="col-span-1 md:col-span-4 bg-surface rounded-xl border border-outline-variant p-lg card-ambient flex flex-col justify-between relative overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-1 bg-secondary-container"></div>
+<div class="flex justify-between items-start mb-md">
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant mb-1">En Proceso / Pendientes</p>
+<h3 class="font-headline-xl text-headline-xl text-primary">24</h3>
+</div>
+<div class="w-10 h-10 rounded-full bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed-variant">
+<span class="material-symbols-outlined">hourglass_top</span>
+</div>
+</div>
+<div class="w-full bg-surface-container-high rounded-full h-2 mt-4">
+<div class="bg-secondary-container h-2 rounded-full" style="width: 35%"></div>
+</div>
+</div>
+<!-- KPI: Fleet -->
+<div class="col-span-1 md:col-span-4 bg-primary rounded-xl border border-primary p-lg card-ambient flex flex-col justify-between text-on-primary">
+<div class="flex justify-between items-start mb-md">
+<div>
+<p class="font-label-md text-label-md text-on-primary opacity-80 mb-1">Flota Activa</p>
+<h3 class="font-headline-xl text-headline-xl">8<span class="text-xl font-normal opacity-70">/10</span></h3>
+</div>
+<div class="w-10 h-10 rounded-full bg-surface-tint flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined">local_police</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-tertiary-fixed-dim animate-pulse"></span>
+<span class="font-label-md text-label-md text-on-primary">Patrullas en terreno</span>
+</div>
+</div>
+<!-- Map Widget -->
+<div class="col-span-1 md:col-span-8 bg-surface rounded-xl border border-outline-variant p-0 card-ambient overflow-hidden flex flex-col h-[400px]">
+<div class="p-md border-b border-outline-variant flex justify-between items-center bg-surface z-10">
+<h3 class="font-headline-md text-headline-md text-primary">Mapa Operativo</h3>
+<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center gap-1 font-label-bold text-label-bold">
+                            Filtros <span class="material-symbols-outlined text-sm">filter_list</span>
+</button>
+</div>
+<div class="flex-1 bg-surface-container-low relative">
+<div class="absolute inset-0 w-full h-full opacity-60 mix-blend-multiply" data-alt="High-contrast satellite map of Calle Larga, Chile. Styled in dark blues and greys. Street lines are highlighted in crisp light grey. Professional, tactical operational aesthetic. No text or labels, just terrain and roads." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuACaBo-66cqzo0F9tSTe7KOPqioowafoCpKztGS--Q6jD7-Uhgyo4LUgK53EXWVRMbQUEJq-t5O7QqQzdUPlzJDTBGqHv8aK3h4Nn8MZyV1-qpbbkMhi_D3KrIQ0yULYgaPnR4GhnxFiRLMIfUKUdYo0FtgHm6j_4hCWTE5yG9JbOVVjwvUfCWGXdgz6Y0srmiFaQdNjN4T3sSNqB-4KfZuwaigLh8VxUNw_w9Mo9t5EcYDOMETPuVZjQ')"></div>
+<!-- Map Pins -->
+<div class="absolute top-[30%] left-[40%] flex flex-col items-center group cursor-pointer">
+<div class="bg-primary text-on-primary px-2 py-1 rounded shadow-sm text-xs font-bold mb-1 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Procedimiento #442</div>
+<div class="w-4 h-4 bg-primary rounded-full border-2 border-white shadow-md"></div>
+</div>
+<div class="absolute top-[60%] left-[20%] flex flex-col items-center group cursor-pointer">
+<div class="bg-secondary-container text-on-secondary shadow-sm px-2 py-1 rounded text-xs font-bold mb-1 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Incidencia Grave</div>
+<div class="w-4 h-4 bg-secondary-container rounded-full border-2 border-white shadow-md animate-pulse"></div>
+</div>
+</div>
+</div>
+<!-- Quick Actions Panel -->
+<div class="col-span-1 md:col-span-4 bg-surface rounded-xl border border-outline-variant p-lg card-ambient flex flex-col">
+<h3 class="font-headline-md text-headline-md text-primary mb-md">Acciones Rápidas</h3>
+<div class="grid grid-cols-2 gap-sm flex-1">
+<button class="bg-surface-container-low hover:bg-surface-container border border-outline-variant rounded-lg p-md flex flex-col items-center justify-center gap-2 transition-all active:scale-95 text-primary">
+<span class="material-symbols-outlined text-2xl">person_add</span>
+<span class="font-label-bold text-label-bold text-center">Nuevo Usuario</span>
+</button>
+<button class="bg-surface-container-low hover:bg-surface-container border border-outline-variant rounded-lg p-md flex flex-col items-center justify-center gap-2 transition-all active:scale-95 text-primary">
+<span class="material-symbols-outlined text-2xl">description</span>
+<span class="font-label-bold text-label-bold text-center">Generar Reporte</span>
+</button>
+<button class="bg-primary hover:bg-on-primary-fixed-variant text-on-primary rounded-lg p-md flex flex-col items-center justify-center gap-2 transition-all active:scale-95 col-span-2 mt-auto">
+<span class="material-symbols-outlined text-2xl">add_circle</span>
+<span class="font-label-bold text-label-bold">Registrar Procedimiento</span>
+</button>
+</div>
+</div>
+<!-- Recent Procedures List -->
+<div class="col-span-1 md:col-span-12 bg-surface rounded-xl border border-outline-variant p-0 card-ambient mt-4">
+<div class="p-md border-b border-outline-variant flex justify-between items-center">
+<h3 class="font-headline-md text-headline-md text-primary">Procedimientos Recientes</h3>
+<a class="font-label-bold text-label-bold text-primary hover:underline" href="#">Ver todos</a>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-lowest border-b border-outline-variant">
+<th class="p-md font-label-md text-label-md text-on-surface-variant font-medium">ID</th>
+<th class="p-md font-label-md text-label-md text-on-surface-variant font-medium">Tipo</th>
+<th class="p-md font-label-md text-label-md text-on-surface-variant font-medium">Ubicación</th>
+<th class="p-md font-label-md text-label-md text-on-surface-variant font-medium">Oficial</th>
+<th class="p-md font-label-md text-label-md text-on-surface-variant font-medium">Estado</th>
+<th class="p-md font-label-md text-label-md text-on-surface-variant font-medium text-right">Acción</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b border-outline-variant hover:bg-surface-container-lowest transition-colors">
+<td class="p-md font-body-md text-body-md font-semibold text-primary">#4821</td>
+<td class="p-md font-body-md text-body-md text-on-surface">Ruidos Molestos</td>
+<td class="p-md font-body-md text-body-md text-on-surface-variant">Pasaje Los Olivos 124</td>
+<td class="p-md font-body-md text-body-md text-on-surface">Sgto. A. Pérez</td>
+<td class="p-md">
+<span class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-[#e8f5e9] text-[#1b5e20] text-xs font-bold">
+<span class="material-symbols-outlined text-[14px]">check_circle</span> Realizado
+                                        </span>
+</td>
+<td class="p-md text-right">
+<button class="text-primary hover:text-on-primary-fixed-variant bg-transparent border border-primary px-3 py-1 rounded text-sm font-semibold">Detalle</button>
+</td>
+</tr>
+<tr class="border-b border-outline-variant hover:bg-surface-container-lowest transition-colors relative">
+<!-- Header Strip Indicator for status -->
+<td class="p-0 h-0" colspan="6"><div class="absolute left-0 top-0 bottom-0 w-1 bg-secondary-container"></div></td>
+</tr>
+<tr class="border-b border-outline-variant hover:bg-surface-container-lowest transition-colors">
+<td class="p-md font-body-md text-body-md font-semibold text-primary">#4822</td>
+<td class="p-md font-body-md text-body-md text-on-surface font-semibold">Asistencia en Accidente</td>
+<td class="p-md font-body-md text-body-md text-on-surface-variant">Ruta 57, Km 45</td>
+<td class="p-md font-body-md text-body-md text-on-surface">Cbo. M. Rojas</td>
+<td class="p-md">
+<span class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-secondary-container text-on-secondary text-xs font-bold">
+<span class="material-symbols-outlined text-[14px]">warning</span> Pendiente
+                                        </span>
+</td>
+<td class="p-md text-right">
+<button class="text-primary hover:text-on-primary-fixed-variant bg-transparent border border-primary px-3 py-1 rounded text-sm font-semibold">Detalle</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

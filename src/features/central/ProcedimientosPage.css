@@ -1,0 +1,103 @@
+.procedimientos-cabecera {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-md);
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+.procedimientos-cabecera__titulo {
+  font-size: var(--fs-headline-md);
+  color: var(--color-primary-container);
+}
+
+.procedimientos-selector-estado {
+  min-height: 3.6rem;
+  width: 100%;
+  padding: 0 var(--space-sm);
+  border-radius: var(--radius-default);
+  border: 0.1rem solid var(--color-outline-variant);
+  font-size: var(--fs-label-md);
+  background-color: var(--color-surface);
+}
+
+.tabla-procedimientos {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.tabla-procedimientos td {
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+.tabla-procedimientos th {
+  white-space: normal;
+  overflow-wrap: normal;
+  word-break: keep-all;
+}
+
+.tabla-procedimientos th:nth-child(1),
+.tabla-procedimientos td:nth-child(1) {
+  width: 8%;
+}
+
+.tabla-procedimientos th:nth-child(2),
+.tabla-procedimientos td:nth-child(2) {
+  width: 15%;
+}
+
+.tabla-procedimientos th:nth-child(3),
+.tabla-procedimientos td:nth-child(3) {
+  width: 11%;
+}
+
+.tabla-procedimientos th:nth-child(4),
+.tabla-procedimientos td:nth-child(4) {
+  width: 17%;
+}
+
+.tabla-procedimientos th:nth-child(5),
+.tabla-procedimientos td:nth-child(5) {
+  width: 14%;
+}
+
+.tabla-procedimientos th:nth-child(6),
+.tabla-procedimientos td:nth-child(6) {
+  width: 12%;
+}
+
+.tabla-procedimientos th:nth-child(7),
+.tabla-procedimientos td:nth-child(7) {
+  width: 10%;
+}
+
+.tabla-procedimientos th:nth-child(8),
+.tabla-procedimientos td:nth-child(8) {
+  width: 13%;
+}
+
+.tabla tbody tr.procedimientos-fila--pendiente {
+  background-color: #fbe4e2;
+}
+
+.tabla tbody tr.procedimientos-fila--en-proceso {
+  background-color: #fdf1d3;
+}
+
+.tabla tbody tr.procedimientos-fila--realizado {
+  background-color: #e2f0e0;
+}
+
+.tabla tbody tr.procedimientos-fila--pendiente:hover {
+  background-color: #f6d2ce;
+}
+
+.tabla tbody tr.procedimientos-fila--en-proceso:hover {
+  background-color: #fbe8b8;
+}
+
+.tabla tbody tr.procedimientos-fila--realizado:hover {
+  background-color: #cfe6ca;
+}

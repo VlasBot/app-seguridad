@@ -1,0 +1,47 @@
+.grafico-barras {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  max-height: 32rem;
+  overflow-y: auto;
+}
+
+.grafico-barras__fila {
+  display: grid;
+  grid-template-columns: 14rem 1fr 3rem;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.grafico-barras__etiqueta {
+  font-size: var(--fs-label-md);
+  color: var(--color-on-surface-variant);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.grafico-barras__pista {
+  height: 1.2rem;
+  border-radius: var(--radius-full);
+  background-color: var(--color-surface-container-high);
+  overflow: hidden;
+}
+
+.grafico-barras__relleno {
+  height: 100%;
+  border-radius: var(--radius-full);
+  background-color: var(--color-accent-secundario);
+}
+
+.grafico-barras__valor {
+  font-size: var(--fs-body-md);
+  font-weight: 700;
+  color: var(--color-primary-container);
+  text-align: right;
+}
+
+.grafico-barras__vacio {
+  color: var(--color-on-surface-variant);
+  font-size: var(--fs-body-md);
+}

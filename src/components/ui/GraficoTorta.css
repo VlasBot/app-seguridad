@@ -1,0 +1,75 @@
+.grafico-torta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
+.grafico-torta__circulo {
+  position: relative;
+  width: 16rem;
+  height: 16rem;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.grafico-torta__centro {
+  width: 9.6rem;
+  height: 9.6rem;
+  border-radius: var(--radius-full);
+  background-color: var(--color-surface);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.grafico-torta__total {
+  font-size: var(--fs-headline-md);
+  font-weight: 700;
+  color: var(--color-primary-container);
+}
+
+.grafico-torta__total-etiqueta {
+  font-size: var(--fs-label-md);
+  color: var(--color-on-surface-variant);
+}
+
+.grafico-torta__leyenda {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  width: 100%;
+}
+
+.grafico-torta__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: var(--fs-body-md);
+}
+
+.grafico-torta__punto {
+  width: 1.2rem;
+  height: 1.2rem;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+
+.grafico-torta__etiqueta {
+  color: var(--color-on-surface-variant);
+  flex: 1;
+}
+
+.grafico-torta__valor {
+  font-weight: 700;
+  color: var(--color-primary-container);
+}
+
+.grafico-torta__porcentaje {
+  font-weight: 400;
+  color: var(--color-on-surface-variant);
+}

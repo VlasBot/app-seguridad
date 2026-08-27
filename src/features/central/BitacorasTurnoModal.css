@@ -1,0 +1,120 @@
+.bitacoras {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.bitacoras__periodo {
+  font-size: var(--fs-label-md);
+  color: var(--color-on-surface-variant);
+}
+
+.bitacoras__vehiculos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-default);
+  background-color: var(--color-surface-container-high);
+  list-style: none;
+}
+
+.bitacoras__vehiculo-fila {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.bitacoras__vehiculo-linea {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-sm);
+}
+
+.bitacoras__patente {
+  font-size: var(--fs-body-md);
+  font-weight: 700;
+  color: var(--color-on-surface);
+}
+
+.bitacoras__registro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  border: 0.1rem solid var(--color-outline-variant);
+  border-radius: var(--radius-default);
+  background-color: var(--color-surface-container-lowest);
+}
+
+.bitacoras__cabecera {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.bitacoras__inspector {
+  font-size: var(--fs-body-md);
+  font-weight: 700;
+  color: var(--color-on-surface);
+}
+
+.bitacoras__tipo {
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-full);
+  font-size: var(--fs-label-md);
+  font-weight: 700;
+}
+
+.bitacoras__tipo--inicio_turno {
+  background-color: rgba(87, 182, 178, 0.2);
+  color: var(--color-accent-secundario);
+}
+
+.bitacoras__tipo--fin_turno {
+  background-color: rgba(128, 188, 0, 0.15);
+  color: var(--color-accent-positivo-dim);
+}
+
+.bitacoras__fecha {
+  margin-left: auto;
+  font-size: var(--fs-label-md);
+  color: var(--color-outline);
+}
+
+.bitacoras__datos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: var(--space-sm);
+}
+
+.bitacoras__dato,
+.bitacoras__texto {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.bitacoras__dato-etiqueta {
+  font-size: var(--fs-label-md);
+  color: var(--color-outline);
+}
+
+.bitacoras__dato-valor {
+  font-size: var(--fs-body-md);
+  color: var(--color-on-surface);
+}
+
+.bitacoras__texto p {
+  font-size: var(--fs-body-md);
+  line-height: var(--lh-body-md);
+  color: var(--color-on-surface);
+  white-space: pre-wrap;
+}
+
+.bitacoras__sin-dato {
+  color: var(--color-outline);
+  font-style: italic;
+}

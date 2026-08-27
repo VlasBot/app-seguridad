@@ -1,0 +1,16 @@
+.tarjeta {
+  background-color: var(--color-surface);
+  border: 0.1rem solid var(--color-outline-variant);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-ambient);
+}
+
+.tarjeta--padding {
+  padding: var(--space-lg);
+}
+
+.tarjeta--oscura {
+  background-color: var(--color-primary-container);
+  border-color: var(--color-primary-container);
+  color: var(--color-on-primary);
+}
