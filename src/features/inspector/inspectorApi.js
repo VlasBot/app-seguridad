@@ -35,8 +35,9 @@ const CAMPOS_TURNO_VIGENTE =
   'responsable_id, vehiculo:vehiculo_id(id, patente, tipo))'
 
 /**
- * Turno grupal vigente del inspector. Primero se buscan los turnos en los que
- * participa y luego se filtra por el horario actual.
+ * Turno grupal vigente del inspector. Busca turnos que ya iniciaron y no están finalizados.
+ * Un inspector puede ver su turno incluso si la hora de fin programada ya pasó, para poder
+ * cerrar su bitácora aunque se haya retrasado.
  */
 export async function obtenerTurnoVigente(inspectorId) {
   const ahora = new Date().toISOString()
@@ -55,7 +56,6 @@ export async function obtenerTurnoVigente(inspectorId) {
     .in('id', asignaciones.map((asignacion) => asignacion.turno_id))
     .in('estado', ['programado', 'en_curso'])
     .lte('inicio_programado', ahora)
-    .gte('fin_programado', ahora)
     .order('inicio_programado', { ascending: false })
     .limit(1)
     .maybeSingle()
