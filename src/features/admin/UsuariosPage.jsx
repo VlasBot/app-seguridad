@@ -11,6 +11,8 @@ import { UsuarioFormModal } from './UsuarioFormModal'
 import { listarUsuarios, actualizarUsuario, crearUsuario, editarUsuario } from './adminApi'
 import './UsuariosPage.css'
 
+// Edge Function list-users retrieves all user profiles and their emails from auth.users
+
 const COLUMNAS = [
   { key: 'nombre', titulo: 'Nombre' },
   { key: 'email', titulo: 'Correo' },
