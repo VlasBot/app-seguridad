@@ -26,16 +26,9 @@
 }
 
 .login-marca__logo {
-  width: 6.4rem;
-  height: 6.4rem;
-  border-radius: var(--radius-full);
-  background-color: var(--color-primary-container);
-  color: var(--color-on-primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: var(--fs-headline-md);
-  font-weight: 700;
+  width: 9.6rem;
+  height: 9.6rem;
+  object-fit: contain;
 }
 
 .login-marca__titulo {

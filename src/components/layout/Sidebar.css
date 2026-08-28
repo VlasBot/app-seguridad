@@ -24,13 +24,7 @@
 .barra-lateral__logo {
   width: 4rem;
   height: 4rem;
-  border-radius: var(--radius-full);
-  background-color: var(--color-primary-container);
-  color: var(--color-on-primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
+  object-fit: contain;
   flex-shrink: 0;
 }
 

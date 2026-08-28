@@ -42,9 +42,7 @@ export function Sidebar({ abierta, onCerrar }) {
       aria-label="Navegación principal"
     >
       <div className="barra-lateral__marca">
-        <div className="barra-lateral__logo" aria-hidden="true">
-          CL
-        </div>
+        <img className="barra-lateral__logo" src="/logo.png" alt="" aria-hidden="true" />
         <div>
           <h1 className="barra-lateral__titulo">Calle Larga</h1>
           <p className="barra-lateral__subtitulo">Seguridad Pública</p>

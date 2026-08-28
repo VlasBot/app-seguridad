@@ -37,9 +37,11 @@ export function LoginPage() {
     <div className="login-pagina">
       <div className="login-tarjeta">
         <div className="login-marca">
-          <div className="login-marca__logo" aria-hidden="true">
-            CL
-          </div>
+          <img
+            className="login-marca__logo"
+            src="/logo.png"
+            alt="Municipalidad de Calle Larga"
+          />
           <h1 className="login-marca__titulo">Calle Larga</h1>
           <p className="login-marca__subtitulo">Seguridad Pública</p>
         </div>
