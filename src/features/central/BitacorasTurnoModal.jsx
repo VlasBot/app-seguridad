@@ -79,7 +79,11 @@ export function BitacorasTurnoModal({ turno, onCerrar }) {
                     {asignacion.inspector?.nombre_completo}
                     {asignacion.inspector_id === turno.responsable_id ? ' (Responsable)' : ''}
                   </span>
-                  <span className="bitacoras__dato-valor">
+                  <span
+                    className={`bitacoras__dato-valor${
+                      asignacion.presente === false ? ' bitacoras__dato-valor--ausente' : ''
+                    }`}
+                  >
                     {asignacion.presente === null
                       ? 'Sin lista pasada'
                       : asignacion.presente

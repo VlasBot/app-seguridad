@@ -107,6 +107,14 @@
   color: var(--color-on-surface);
 }
 
+.bitacoras__dato-valor--ausente {
+  padding: 0.1rem var(--space-sm);
+  border-radius: var(--radius-full);
+  background-color: var(--color-error-container);
+  color: var(--color-on-error-container);
+  font-weight: 700;
+}
+
 .bitacoras__texto p {
   font-size: var(--fs-body-md);
   line-height: var(--lh-body-md);
