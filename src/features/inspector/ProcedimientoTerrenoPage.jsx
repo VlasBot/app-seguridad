@@ -4,6 +4,8 @@ import { Card } from '../../components/ui/Card'
 import { Button } from '../../components/ui/Button'
 import { SelectField } from '../../components/ui/SelectField'
 import { InputField } from '../../components/ui/InputField'
+import { Spinner } from '../../components/ui/Spinner'
+import { EmptyState } from '../../components/ui/EmptyState'
 import { useAuth } from '../../hooks/useAuth'
 import { useToast } from '../../hooks/useToast'
 import { TIPOS_PROCEDIMIENTO, SECTORES } from '../shared/procedimientos.constants'
@@ -27,8 +29,13 @@ export function ProcedimientoTerrenoPage() {
     descripcion: '',
   })
 
+  const [cargando, setCargando] = useState(true)
+
   useEffect(() => {
-    obtenerTurnoVigente(profile.id).then(({ data }) => setTurno(data))
+    obtenerTurnoVigente(profile.id).then(({ data }) => {
+      setTurno(data)
+      setCargando(false)
+    })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [profile.id])
 
@@ -63,6 +70,30 @@ export function ProcedimientoTerrenoPage() {
     setEnviando(false)
     mostrarExito('Procedimiento registrado correctamente.')
     navegar('/inspector/mi-turno')
+  }
+
+  if (cargando) return <Spinner />
+
+  // Sin turno vigente (aún no inicia, o el responsable ya cerró la bitácora
+  // de término) nadie del grupo puede registrar procedimientos.
+  if (!turno) {
+    return (
+      <div className="procedimiento-terreno">
+        <h1 className="procedimiento-terreno__titulo">Nuevo Procedimiento</h1>
+        <EmptyState mensaje="No tienes un turno vigente. Debes tener un turno en curso para registrar procedimientos." />
+      </div>
+    )
+  }
+
+  const esResponsableDelTurno = turno.responsable_id === null || turno.responsable_id === profile.id
+
+  if (!esResponsableDelTurno) {
+    return (
+      <div className="procedimiento-terreno">
+        <h1 className="procedimiento-terreno__titulo">Nuevo Procedimiento</h1>
+        <EmptyState mensaje="Sólo el responsable de tu turno puede registrar procedimientos." />
+      </div>
+    )
   }
 
   return (

@@ -152,7 +152,10 @@ export function TurnosPage() {
               <td data-label="Inspectores">
                 <ul className="turnos-asignados">
                   {turno.inspectores.map((asignacion) => (
-                    <li key={asignacion.inspector_id}>{asignacion.inspector?.nombre_completo}</li>
+                    <li key={asignacion.inspector_id}>
+                      {asignacion.inspector?.nombre_completo}
+                      {asignacion.inspector_id === turno.responsable_id ? ' (Responsable)' : ''}
+                    </li>
                   ))}
                 </ul>
               </td>

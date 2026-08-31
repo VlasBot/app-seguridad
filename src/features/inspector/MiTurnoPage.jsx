@@ -70,6 +70,10 @@ export function MiTurnoPage() {
   const yaInicio = bitacoras.some((bitacora) => bitacora.tipo === 'inicio_turno')
   const yaTermino = bitacoras.some((bitacora) => bitacora.tipo === 'fin_turno')
 
+  // Turnos antiguos sin responsable asignado mantienen el comportamiento
+  // grupal: cualquier integrante puede iniciar, terminar y registrar.
+  const esResponsableDelTurno = turno.responsable_id === null || turno.responsable_id === profile.id
+
   const nombreResponsable = (inspectorId) =>
     turno.inspectores.find((integrante) => integrante.inspector_id === inspectorId)
       ?.nombre_completo ?? 'sin asignar'
@@ -95,6 +99,7 @@ export function MiTurnoPage() {
                 <li key={asignacion.inspector_id}>
                   {asignacion.nombre_completo}
                   {asignacion.inspector_id === profile.id ? ' (tú)' : ''}
+                  {asignacion.inspector_id === turno.responsable_id ? ' — Responsable del turno' : ''}
                 </li>
               ))}
             </ul>
@@ -127,31 +132,40 @@ export function MiTurnoPage() {
         </div>
 
         <div className="mi-turno__acciones">
-          {!yaInicio && (
-            <Button
-              anchoCompleto
-              variante="urgente"
-              onClick={() => navegar(`/inspector/bitacora/inicio_turno`)}
-            >
-              Iniciar Turno
-            </Button>
+          {esResponsableDelTurno ? (
+            <>
+              {!yaInicio && (
+                <Button
+                  anchoCompleto
+                  variante="urgente"
+                  onClick={() => navegar(`/inspector/bitacora/inicio_turno`)}
+                >
+                  Iniciar Turno
+                </Button>
+              )}
+
+              {yaInicio && !yaTermino && (
+                <Button anchoCompleto variante="urgente" onClick={() => setModalFinAbierto(true)}>
+                  Finalizar Turno
+                </Button>
+              )}
+
+              {yaInicio && yaTermino && <p>Ya registraste el inicio y el fin de este turno.</p>}
+
+              <Button
+                anchoCompleto
+                variante="primario"
+                onClick={() => navegar('/inspector/procedimiento/nuevo')}
+              >
+                Registrar Procedimiento
+              </Button>
+            </>
+          ) : (
+            <p>
+              {nombreResponsable(turno.responsable_id)} es el responsable de este turno: sólo él
+              puede iniciarlo, finalizarlo y registrar procedimientos.
+            </p>
           )}
-
-          {yaInicio && !yaTermino && (
-            <Button anchoCompleto variante="urgente" onClick={() => setModalFinAbierto(true)}>
-              Finalizar Turno
-            </Button>
-          )}
-
-          {yaInicio && yaTermino && <p>Ya registraste el inicio y el fin de este turno.</p>}
-
-          <Button
-            anchoCompleto
-            variante="primario"
-            onClick={() => navegar('/inspector/procedimiento/nuevo')}
-          >
-            Registrar Procedimiento
-          </Button>
         </div>
       </Card>
 

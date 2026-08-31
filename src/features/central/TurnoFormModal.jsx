@@ -61,6 +61,10 @@ export function TurnoFormModal({
     () => turno?.inspectores?.map((asignacion) => asignacion.inspector_id) ?? [],
   )
 
+  // Inspector a cargo de la tablet: sólo él inicia/termina el turno,
+  // registra procedimientos y deja las observaciones de la jornada.
+  const [responsableTurno, setResponsableTurno] = useState(() => turno?.responsable_id ?? '')
+
   // Mapa vehiculoId -> kilometraje escrito. Estar en el mapa equivale a estar asignado.
   const [vehiculosSeleccionados, setVehiculosSeleccionados] = useState(() => {
     const inicial = {}
@@ -98,6 +102,9 @@ export function TurnoFormModal({
   const responsableEfectivo = (vehiculoId) =>
     inspectoresSeleccionados.length === 1 ? inspectoresSeleccionados[0] : responsables[vehiculoId] || ''
 
+  const responsableTurnoEfectivo =
+    inspectoresSeleccionados.length === 1 ? inspectoresSeleccionados[0] : responsableTurno
+
   const vehiculosDisponibles = vehiculos.filter(
     (vehiculo) =>
       !ESTADOS_NO_OPERATIVOS.includes(vehiculo.estado) ||
@@ -115,6 +122,12 @@ export function TurnoFormModal({
         ? actuales.filter((id) => id !== inspectorId)
         : [...actuales, inspectorId],
     )
+    setResponsableTurno((actual) => (actual === inspectorId ? '' : actual))
+    setError('')
+  }
+
+  const actualizarResponsableTurno = (evento) => {
+    setResponsableTurno(evento.target.value)
     setError('')
   }
 
@@ -155,6 +168,14 @@ export function TurnoFormModal({
   const validar = () => {
     if (inspectoresSeleccionados.length === 0) {
       return 'Selecciona al menos un inspector para el turno.'
+    }
+
+    if (!responsableTurnoEfectivo) {
+      return 'Selecciona el inspector responsable del turno.'
+    }
+
+    if (!inspectoresSeleccionados.includes(responsableTurnoEfectivo)) {
+      return 'El responsable del turno ya no pertenece al turno; selecciona otro.'
     }
 
     if (new Date(form.fin_programado) <= new Date(form.inicio_programado)) {
@@ -223,6 +244,7 @@ export function TurnoFormModal({
       // tal cual (lo que la desplazaría por el huso horario del navegador).
       inicio_programado: aFechaIsoDesdeInputLocal(form.inicio_programado),
       fin_programado: aFechaIsoDesdeInputLocal(form.fin_programado),
+      responsable_id: responsableTurnoEfectivo,
       inspectores: inspectoresSeleccionados,
       vehiculos: Object.entries(vehiculosSeleccionados).map(([vehiculoId, kilometraje]) => ({
         vehiculo_id: vehiculoId,
@@ -306,6 +328,29 @@ export function TurnoFormModal({
             </ul>
           )}
         </fieldset>
+
+        {inspectoresSeleccionados.length > 1 ? (
+          <SelectField
+            label="Responsable del turno"
+            value={responsableTurno}
+            onChange={actualizarResponsableTurno}
+            placeholder="Selecciona un inspector"
+            opciones={inspectoresSeleccionados.map((inspectorId) => ({
+              value: inspectorId,
+              label:
+                inspectores.find((inspector) => inspector.id === inspectorId)?.nombre_completo ??
+                inspectorId,
+            }))}
+            ayuda="Sólo este inspector podrá iniciar y terminar el turno, registrar procedimientos y dejar las observaciones de la jornada."
+          />
+        ) : (
+          inspectoresSeleccionados.length === 1 && (
+            <p className="asignacion__responsable-unico">
+              Responsable del turno:{' '}
+              {inspectores.find((inspector) => inspector.id === inspectoresSeleccionados[0])?.nombre_completo}
+            </p>
+          )
+        )}
 
         <fieldset className="asignacion">
           <legend className="asignacion__leyenda">

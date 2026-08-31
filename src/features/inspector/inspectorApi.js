@@ -30,7 +30,7 @@ export async function listarProcedimientosDelInspector(inspectorId, { pagina = 1
 }
 
 const CAMPOS_TURNO_VIGENTE =
-  'id, inicio_programado, fin_programado, estado, ' +
+  'id, inicio_programado, fin_programado, estado, responsable_id, ' +
   'vehiculos:turno_vehiculos(vehiculo_id, kilometraje, kilometraje_final, kilometraje_final_por, ' +
   'responsable_id, vehiculo:vehiculo_id(id, patente, tipo))'
 
@@ -86,6 +86,20 @@ export async function obtenerBitacorasDeTurno(turnoId, inspectorId) {
 export async function crearBitacora(payload) {
   const { data, error } = await supabase.from('bitacoras').insert(payload).select().single()
   return { data, error }
+}
+
+/**
+ * El responsable pasa lista al iniciar el turno: marca presente o ausente a
+ * cada integrante. Va por función porque un inspector no puede escribir
+ * directamente en las asignaciones del turno.
+ */
+export async function registrarAsistenciaTurno(turnoId, asistencia) {
+  const { error } = await supabase.rpc('registrar_asistencia_turno', {
+    p_turno_id: turnoId,
+    p_asistencia: asistencia,
+  })
+
+  return { error }
 }
 
 /**

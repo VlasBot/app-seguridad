@@ -2,9 +2,11 @@ import { useState } from 'react'
 import { Modal } from '../../components/ui/Modal'
 import { Button } from '../../components/ui/Button'
 import { InputField } from '../../components/ui/InputField'
+import { FotoUploader } from '../../components/ui/FotoUploader'
 
 export function ResolverProcedimientoModal({ procedimiento, onCerrar, onConfirmar, guardando }) {
   const [resolucion, setResolucion] = useState('')
+  const [archivos, setArchivos] = useState([])
   const [error, setError] = useState('')
 
   const manejarEnvio = (evento) => {
@@ -15,7 +17,7 @@ export function ResolverProcedimientoModal({ procedimiento, onCerrar, onConfirma
       return
     }
 
-    onConfirmar(resolucion.trim())
+    onConfirmar(resolucion.trim(), archivos)
   }
 
   return (
@@ -44,6 +46,12 @@ export function ResolverProcedimientoModal({ procedimiento, onCerrar, onConfirma
           }}
           error={error}
           required
+        />
+
+        <FotoUploader
+          archivos={archivos}
+          onAgregar={(nuevos) => setArchivos((actuales) => [...actuales, ...nuevos])}
+          onQuitar={(indice) => setArchivos((actuales) => actuales.filter((_, i) => i !== indice))}
         />
       </form>
     </Modal>

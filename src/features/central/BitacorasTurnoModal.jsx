@@ -70,6 +70,28 @@ export function BitacorasTurnoModal({ turno, onCerrar }) {
           {formatearFechaHora(turno.inicio_programado)} — {formatearFechaHora(turno.fin_programado)}
         </p>
 
+        {turno.responsable_id && (
+          <ul className="bitacoras__vehiculos">
+            {turno.inspectores.map((asignacion) => (
+              <li key={asignacion.inspector_id} className="bitacoras__vehiculo-fila">
+                <div className="bitacoras__vehiculo-linea">
+                  <span className="bitacoras__patente">
+                    {asignacion.inspector?.nombre_completo}
+                    {asignacion.inspector_id === turno.responsable_id ? ' (Responsable)' : ''}
+                  </span>
+                  <span className="bitacoras__dato-valor">
+                    {asignacion.presente === null
+                      ? 'Sin lista pasada'
+                      : asignacion.presente
+                        ? 'Presente'
+                        : 'Ausente'}
+                  </span>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+
         {turno.vehiculos.length > 0 && (
           <ul className="bitacoras__vehiculos">
             {turno.vehiculos.map((asignacion) => (

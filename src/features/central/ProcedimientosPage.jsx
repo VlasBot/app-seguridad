@@ -131,19 +131,24 @@ export function ProcedimientosPage() {
     cargarProcedimientos(paginaActual)
   }
 
-  const confirmarResolucion = async (resolucion) => {
+  const confirmarResolucion = async (resolucion, archivos) => {
     setResolviendo(true)
     const { error } = await actualizarProcedimiento(procedimientoAResolver.id, {
       estado: 'Realizado',
       resolucion,
     })
-    setResolviendo(false)
 
     if (error) {
+      setResolviendo(false)
       mostrarError(traducirErrorSupabase(error))
       return
     }
 
+    for (const archivo of archivos) {
+      await subirFotoProcedimiento(procedimientoAResolver.id, archivo, profile.id)
+    }
+
+    setResolviendo(false)
     mostrarExito('Procedimiento marcado como Realizado.')
     setProcedimientoAResolver(null)
     cargarProcedimientos(paginaActual)

@@ -14,7 +14,12 @@ import {
   ETIQUETAS_ESTADO_RADIO,
 } from '../shared/procedimientos.constants'
 import { traducirErrorSupabase } from '../shared/errorMessages'
-import { obtenerTurnoVigente, crearBitacora, sincronizarEstadoTurno } from './inspectorApi'
+import {
+  obtenerTurnoVigente,
+  crearBitacora,
+  sincronizarEstadoTurno,
+  registrarAsistenciaTurno,
+} from './inspectorApi'
 import './BitacoraFormPage.css'
 
 const TITULO = 'Bitácora de Inicio de Turno'
@@ -36,6 +41,8 @@ export function BitacoraFormPage() {
     observaciones_radio: '',
     incidencias: '',
   })
+  // Asistencia que pasa el responsable: por defecto todos presentes.
+  const [asistencia, setAsistencia] = useState({})
 
   useEffect(() => {
     let activo = true
@@ -55,6 +62,15 @@ export function BitacoraFormPage() {
       if (vehiculoAsignado) {
         setForm((actual) => ({ ...actual, vehiculo_id: vehiculoAsignado.vehiculo_id }))
       }
+
+      setAsistencia(
+        Object.fromEntries(
+          (data?.inspectores ?? []).map((integrante) => [
+            integrante.inspector_id,
+            integrante.presente ?? true,
+          ]),
+        ),
+      )
 
       setCargando(false)
     })
@@ -96,9 +112,29 @@ export function BitacoraFormPage() {
     )
   })()
 
+  const alternarAsistencia = (inspectorId) => (evento) => {
+    setAsistencia((actual) => ({ ...actual, [inspectorId]: evento.target.checked }))
+  }
+
   const manejarEnvio = async (evento) => {
     evento.preventDefault()
     setEnviando(true)
+
+    if (tipo === 'inicio_turno' && turno.responsable_id) {
+      const { error: errorAsistencia } = await registrarAsistenciaTurno(
+        turno.id,
+        Object.entries(asistencia).map(([inspectorId, presente]) => ({
+          inspector_id: inspectorId,
+          presente,
+        })),
+      )
+
+      if (errorAsistencia) {
+        setEnviando(false)
+        mostrarError(traducirErrorSupabase(errorAsistencia))
+        return
+      }
+    }
 
     const { error } = await crearBitacora({
       turno_id: turno.id,
@@ -132,12 +168,39 @@ export function BitacoraFormPage() {
   if (cargando) return <Spinner />
   if (!turno) return <p>No tienes un turno vigente.</p>
 
+  if (turno.responsable_id !== null && turno.responsable_id !== profile.id) {
+    return <p>Sólo el responsable de este turno puede iniciarlo.</p>
+  }
+
   return (
     <div className="bitacora">
       <h1 className="bitacora__titulo">{TITULO}</h1>
 
       <Card>
         <form className="bitacora__form" onSubmit={manejarEnvio}>
+          {turno.responsable_id && turno.inspectores.length > 1 && (
+            <fieldset className="bitacora__asistencia">
+              <legend>Lista de asistencia</legend>
+              <ul className="bitacora__asistencia-lista">
+                {turno.inspectores.map((integrante) => (
+                  <li key={integrante.inspector_id}>
+                    <label className="bitacora__asistencia-item">
+                      <input
+                        type="checkbox"
+                        checked={asistencia[integrante.inspector_id] ?? true}
+                        onChange={alternarAsistencia(integrante.inspector_id)}
+                      />
+                      <span>
+                        {integrante.nombre_completo}
+                        {integrante.inspector_id === profile.id ? ' (tú)' : ''}
+                      </span>
+                    </label>
+                  </li>
+                ))}
+              </ul>
+            </fieldset>
+          )}
+
           {turno.vehiculos.length > 0 && (
             <SelectField
               label="Vehículo asignado"

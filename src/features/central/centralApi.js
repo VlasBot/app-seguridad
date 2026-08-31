@@ -33,7 +33,8 @@ export async function actualizarVehiculo(id, cambios) {
  */
 export const CAMPOS_TURNO =
   'id, inicio_programado, fin_programado, estado, creado_en, ' +
-  'inspectores:turno_inspectores(inspector_id, inspector:inspector_id(id, nombre_completo)), ' +
+  'responsable_id, responsable:responsable_id(id, nombre_completo), ' +
+  'inspectores:turno_inspectores(inspector_id, presente, inspector:inspector_id(id, nombre_completo)), ' +
   'vehiculos:turno_vehiculos(vehiculo_id, kilometraje, kilometraje_final, kilometraje_final_por, ' +
   'kilometraje_final_en, responsable_id, responsable:responsable_id(id, nombre_completo), ' +
   'vehiculo:vehiculo_id(id, patente, tipo))'
