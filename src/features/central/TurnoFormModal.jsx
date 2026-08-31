@@ -75,15 +75,6 @@ export function TurnoFormModal({
     return inicial
   })
 
-  // Mapa vehiculoId -> inspectorId a cargo de reportar su kilometraje.
-  const [responsables, setResponsables] = useState(() => {
-    const inicial = {}
-    turno?.vehiculos?.forEach((asignacion) => {
-      inicial[asignacion.vehiculo_id] = asignacion.responsable_id ?? ''
-    })
-    return inicial
-  })
-
   const [error, setError] = useState('')
 
   const cierres = cierresPorVehiculo(turno)
@@ -94,13 +85,6 @@ export function TurnoFormModal({
   /** Mínimo aceptable al escribir la salida: 0 si la lectura es histórica. */
   const minimoDeSalida = (vehiculo) =>
     asignadoPreviamente(vehiculo.id) ? 0 : ultimoKilometraje(vehiculo)
-
-  /**
-   * Responsable del vehículo: con un solo inspector en el turno no hay nada
-   * que elegir, así que se asume él aunque no se haya guardado explícito.
-   */
-  const responsableEfectivo = (vehiculoId) =>
-    inspectoresSeleccionados.length === 1 ? inspectoresSeleccionados[0] : responsables[vehiculoId] || ''
 
   const responsableTurnoEfectivo =
     inspectoresSeleccionados.length === 1 ? inspectoresSeleccionados[0] : responsableTurno
@@ -144,24 +128,12 @@ export function TurnoFormModal({
       return siguientes
     })
 
-    setResponsables((actuales) => {
-      const siguientes = { ...actuales }
-      delete siguientes[vehiculo.id]
-      return siguientes
-    })
-
     setError('')
   }
 
   const actualizarKilometraje = (vehiculoId) => (evento) => {
     const { value } = evento.target
     setVehiculosSeleccionados((actuales) => ({ ...actuales, [vehiculoId]: value }))
-    setError('')
-  }
-
-  const actualizarResponsable = (vehiculoId) => (evento) => {
-    const { value } = evento.target
-    setResponsables((actuales) => ({ ...actuales, [vehiculoId]: value }))
     setError('')
   }
 
@@ -214,15 +186,6 @@ export function TurnoFormModal({
       if (kilometrajeFinal !== null && kilometrajeFinal !== undefined && Number(kilometraje) > kilometrajeFinal) {
         return `El kilometraje del vehículo ${vehiculo.patente} no puede superar la lectura de término (${kilometrajeFinal} km).`
       }
-
-      const responsable = responsableEfectivo(vehiculo.id)
-      if (!responsable) {
-        return `Selecciona el inspector responsable del vehículo ${vehiculo.patente}.`
-      }
-
-      if (!inspectoresSeleccionados.includes(responsable)) {
-        return `El responsable del vehículo ${vehiculo.patente} ya no pertenece al turno; selecciona otro.`
-      }
     }
 
     return ''
@@ -246,10 +209,13 @@ export function TurnoFormModal({
       fin_programado: aFechaIsoDesdeInputLocal(form.fin_programado),
       responsable_id: responsableTurnoEfectivo,
       inspectores: inspectoresSeleccionados,
+      // El responsable del turno queda a cargo del kilometraje de todos los
+      // vehículos: es el único que sigue registrando bitácoras, así que ya
+      // no tiene sentido asignar un responsable distinto por vehículo.
       vehiculos: Object.entries(vehiculosSeleccionados).map(([vehiculoId, kilometraje]) => ({
         vehiculo_id: vehiculoId,
         kilometraje: Number(kilometraje),
-        responsable_id: responsableEfectivo(vehiculoId),
+        responsable_id: responsableTurnoEfectivo,
         ...cierres[vehiculoId],
       })),
     })
@@ -361,6 +327,13 @@ export function TurnoFormModal({
             </span>
           </legend>
 
+          {inspectoresSeleccionados.length > 1 && (
+            <p className="asignacion__responsable-unico">
+              El responsable del turno queda a cargo de reportar el kilometraje de todos los
+              vehículos asignados.
+            </p>
+          )}
+
           {vehiculosDisponibles.length === 0 ? (
             <p className="asignacion__vacio">No hay vehículos operativos en la flota.</p>
           ) : (
@@ -402,33 +375,6 @@ export function TurnoFormModal({
                                 : undefined
                             }
                           />
-
-                          {inspectoresSeleccionados.length > 1 ? (
-                            <SelectField
-                              label="Responsable del vehículo"
-                              value={responsables[vehiculo.id] || ''}
-                              onChange={actualizarResponsable(vehiculo.id)}
-                              placeholder="Selecciona un inspector"
-                              opciones={inspectoresSeleccionados.map((inspectorId) => ({
-                                value: inspectorId,
-                                label:
-                                  inspectores.find((inspector) => inspector.id === inspectorId)
-                                    ?.nombre_completo ?? inspectorId,
-                              }))}
-                              ayuda="Sólo este inspector podrá reportar el kilometraje del vehículo en la bitácora."
-                            />
-                          ) : (
-                            inspectoresSeleccionados.length === 1 && (
-                              <p className="asignacion__responsable-unico">
-                                Responsable:{' '}
-                                {
-                                  inspectores.find(
-                                    (inspector) => inspector.id === inspectoresSeleccionados[0],
-                                  )?.nombre_completo
-                                }
-                              </p>
-                            )
-                          )}
                         </div>
                       )}
                     </div>
