@@ -195,6 +195,12 @@ export function ProcedimientosPage() {
                   value={procedimiento.estado}
                   onChange={(evento) => cambiarEstado(procedimiento, evento.target.value)}
                   aria-label={`Cambiar estado del procedimiento ${procedimiento.folio}`}
+                  disabled={procedimiento.estado === 'Realizado'}
+                  title={
+                    procedimiento.estado === 'Realizado'
+                      ? 'Un procedimiento Realizado no puede cambiar de estado.'
+                      : undefined
+                  }
                 >
                   {ESTADOS_PROCEDIMIENTO.map((estado) => (
                     <option key={estado} value={estado}>
