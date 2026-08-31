@@ -47,6 +47,7 @@ export function TurnosPage() {
   const [totalTurnos, setTotalTurnos] = useState(0)
   const [paginaActual, setPaginaActual] = useState(1)
   const [busqueda, setBusqueda] = useState('')
+  const [fecha, setFecha] = useState('')
   const [inspectores, setInspectores] = useState([])
   const [vehiculos, setVehiculos] = useState([])
   const [cargando, setCargando] = useState(true)
@@ -61,12 +62,12 @@ export function TurnosPage() {
 
   useEffect(() => {
     setPaginaActual(1)
-  }, [busqueda])
+  }, [busqueda, fecha])
 
   const cargarDatos = async () => {
     setCargando(true)
     const [turnosRes, inspectoresRes, vehiculosRes] = await Promise.all([
-      listarTurnos({ pagina: paginaActual, busqueda }),
+      listarTurnos({ pagina: paginaActual, busqueda, fecha }),
       listarInspectores(),
       listarVehiculos(),
     ])
@@ -81,9 +82,13 @@ export function TurnosPage() {
   }
 
   useEffect(() => {
-    cargarDatos()
+    const temporizador = setTimeout(() => {
+      cargarDatos()
+    }, 300)
+
+    return () => clearTimeout(temporizador)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [paginaActual, busqueda])
+  }, [paginaActual, busqueda, fecha])
 
   const manejarGuardar = async (form) => {
     setGuardando(true)
@@ -113,8 +118,6 @@ export function TurnosPage() {
     setTurnoAEditar(null)
   }
 
-  if (cargando) return <Spinner />
-
   return (
     <div>
       <div className="turnos-cabecera">
@@ -126,95 +129,124 @@ export function TurnosPage() {
       </div>
 
       <Card style={{ marginBottom: '2.4rem' }}>
-        <div className="turnos-buscador">
-          <span className="turnos-buscador-icono" aria-hidden="true">
-            <IconSearch />
-          </span>
-          <input
-            type="search"
-            className="turnos-buscador-campo"
-            placeholder="Buscar por nombre de inspector…"
-            value={busqueda}
-            onChange={(evento) => setBusqueda(evento.target.value)}
-            aria-label="Buscar turnos"
-          />
+        <div className="turnos-filtros">
+          <div className="turnos-buscador">
+            <span className="turnos-buscador-icono" aria-hidden="true">
+              <IconSearch />
+            </span>
+            <input
+              type="search"
+              className="turnos-buscador-campo"
+              placeholder="Buscar por nombre de inspector…"
+              value={busqueda}
+              onChange={(evento) => setBusqueda(evento.target.value)}
+              aria-label="Buscar turnos por nombre de inspector"
+            />
+          </div>
+
+          <div className="turnos-filtro-fecha">
+            <input
+              type="date"
+              className="turnos-fecha-campo"
+              value={fecha}
+              onChange={(evento) => setFecha(evento.target.value)}
+              aria-label="Filtrar turnos por fecha"
+            />
+            {fecha && (
+              <button
+                type="button"
+                className="turnos-fecha-limpiar"
+                onClick={() => setFecha('')}
+              >
+                Limpiar fecha
+              </button>
+            )}
+          </div>
         </div>
       </Card>
 
-      <Card sinPadding>
-        <DataTable
-          className="tabla-turnos"
-          columnas={COLUMNAS}
-          filas={turnos}
-          mensajeVacio="Aún no hay turnos asignados."
-          renderFila={(turno) => (
-            <tr key={turno.id}>
-              <td data-label="Inspectores">
-                <ul className="turnos-asignados">
-                  {turno.inspectores.map((asignacion) => (
-                    <li key={asignacion.inspector_id}>
-                      {asignacion.inspector?.nombre_completo}
-                      {asignacion.inspector_id === turno.responsable_id ? ' (Responsable)' : ''}
-                    </li>
-                  ))}
-                </ul>
-              </td>
-              <td data-label="Vehículos">
-                {turno.vehiculos.length === 0 ? (
-                  'Sin asignar'
-                ) : (
+      {cargando ? (
+        <Spinner />
+      ) : (
+        <Card sinPadding>
+          <DataTable
+            className="tabla-turnos"
+            columnas={COLUMNAS}
+            filas={turnos}
+            mensajeVacio={
+              busqueda || fecha
+                ? 'No se encontraron turnos para esa búsqueda.'
+                : 'Aún no hay turnos asignados.'
+            }
+            renderFila={(turno) => (
+              <tr key={turno.id}>
+                <td data-label="Inspectores">
                   <ul className="turnos-asignados">
-                    {turno.vehiculos.map((asignacion) => (
-                      <li key={asignacion.vehiculo_id}>
-                        {asignacion.vehiculo?.patente}
-                        <span className="turnos-asignados__km">
-                          {kilometrajeDelTurno(asignacion)}
-                        </span>
-                        <span className="turnos-asignados__km">
-                          {' '}
-                          · Responsable: {asignacion.responsable?.nombre_completo ?? 'sin asignar'}
-                        </span>
+                    {turno.inspectores.map((asignacion) => (
+                      <li key={asignacion.inspector_id}>
+                        {asignacion.inspector?.nombre_completo}
+                        {asignacion.inspector_id === turno.responsable_id ? ' (Responsable)' : ''}
                       </li>
                     ))}
                   </ul>
-                )}
-              </td>
-              <td data-label="Inicio">{formatearFechaHora(turno.inicio_programado)}</td>
-              <td data-label="Fin">{formatearFechaHora(turno.fin_programado)}</td>
-              <td data-label="Estado">
-                <span className={`turnos-badge turnos-badge--${turno.estado}`}>
-                  {ETIQUETAS_ESTADO_TURNO[turno.estado]}
-                </span>
-              </td>
-              <td data-label="Acciones">
-                <div className="turnos-acciones">
-                  {turno.estado !== 'finalizado' && (
+                </td>
+                <td data-label="Vehículos">
+                  {turno.vehiculos.length === 0 ? (
+                    'Sin asignar'
+                  ) : (
+                    <ul className="turnos-asignados">
+                      {turno.vehiculos.map((asignacion) => (
+                        <li key={asignacion.vehiculo_id}>
+                          {asignacion.vehiculo?.patente}
+                          <span className="turnos-asignados__km">
+                            {kilometrajeDelTurno(asignacion)}
+                          </span>
+                          <span className="turnos-asignados__km">
+                            {' '}
+                            · Responsable: {asignacion.responsable?.nombre_completo ?? 'sin asignar'}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </td>
+                <td data-label="Inicio">{formatearFechaHora(turno.inicio_programado)}</td>
+                <td data-label="Fin">{formatearFechaHora(turno.fin_programado)}</td>
+                <td data-label="Estado">
+                  <span className={`turnos-badge turnos-badge--${turno.estado}`}>
+                    {ETIQUETAS_ESTADO_TURNO[turno.estado]}
+                  </span>
+                </td>
+                <td data-label="Acciones">
+                  <div className="turnos-acciones">
+                    {turno.estado !== 'finalizado' && (
+                      <button
+                        type="button"
+                        className="panel__ver-detalle"
+                        onClick={() => abrirEdicion(turno)}
+                      >
+                        Editar
+                      </button>
+                    )}
                     <button
                       type="button"
                       className="panel__ver-detalle"
-                      onClick={() => abrirEdicion(turno)}
+                      onClick={() => setTurnoARevisar(turno)}
                     >
-                      Editar
+                      Ver bitácoras
                     </button>
-                  )}
-                  <button
-                    type="button"
-                    className="panel__ver-detalle"
-                    onClick={() => setTurnoARevisar(turno)}
-                  >
-                    Ver bitácoras
-                  </button>
-                </div>
-              </td>
-            </tr>
-          )}
-        />
-        <Pagination
-          paginaActual={paginaActual}
-          totalPaginas={totalPaginas}
-          onCambiarPagina={setPaginaActual}
-        />
-      </Card>
+                  </div>
+                </td>
+              </tr>
+            )}
+          />
+          <Pagination
+            paginaActual={paginaActual}
+            totalPaginas={totalPaginas}
+            onCambiarPagina={setPaginaActual}
+          />
+        </Card>
+      )}
 
       {modalAbierto && (
         <TurnoFormModal

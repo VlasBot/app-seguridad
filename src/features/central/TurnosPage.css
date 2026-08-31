@@ -99,10 +99,43 @@
   width: 18%;
 }
 
+.turnos-filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+}
+
 .turnos-buscador {
   position: relative;
   display: flex;
   align-items: center;
+  flex: 1 1 24rem;
+}
+
+.turnos-filtro-fecha {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.turnos-fecha-campo {
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-default);
+  border: 0.1rem solid var(--color-outline-variant);
+  font-size: var(--fs-body-md);
+  color: var(--color-on-surface);
+  background-color: transparent;
+}
+
+.turnos-fecha-limpiar {
+  font-size: var(--fs-label-md);
+  color: var(--color-accent-secundario);
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: underline;
+  white-space: nowrap;
 }
 
 .turnos-buscador-icono {

@@ -41,7 +41,8 @@ export function BitacoraFormPage() {
     observaciones_radio: '',
     incidencias: '',
   })
-  // Asistencia que pasa el responsable: por defecto todos presentes.
+  // Asistencia que pasa el responsable: obligatoria, sin valor por defecto
+  // (salvo con un solo inspector en el turno, donde no hay nada que elegir).
   const [asistencia, setAsistencia] = useState({})
 
   useEffect(() => {
@@ -63,11 +64,13 @@ export function BitacoraFormPage() {
         setForm((actual) => ({ ...actual, vehiculo_id: vehiculoAsignado.vehiculo_id }))
       }
 
+      const soloUnInspector = (data?.inspectores?.length ?? 0) === 1
+
       setAsistencia(
         Object.fromEntries(
           (data?.inspectores ?? []).map((integrante) => [
             integrante.inspector_id,
-            integrante.presente ?? true,
+            integrante.presente ?? (soloUnInspector ? true : null),
           ]),
         ),
       )
@@ -112,12 +115,24 @@ export function BitacoraFormPage() {
     )
   })()
 
-  const alternarAsistencia = (inspectorId) => (evento) => {
-    setAsistencia((actual) => ({ ...actual, [inspectorId]: evento.target.checked }))
+  const marcarAsistencia = (inspectorId, presente) => () => {
+    setAsistencia((actual) => ({ ...actual, [inspectorId]: presente }))
   }
+
+  // Con responsable asignado, pasar lista es obligatorio: no se puede enviar
+  // la bitácora de inicio sin marcar presente/ausente a cada integrante.
+  const asistenciaCompleta =
+    !turno?.responsable_id ||
+    turno.inspectores.every((integrante) => typeof asistencia[integrante.inspector_id] === 'boolean')
 
   const manejarEnvio = async (evento) => {
     evento.preventDefault()
+
+    if (tipo === 'inicio_turno' && !asistenciaCompleta) {
+      mostrarError('Debes pasar lista: marca presente o ausente a cada inspector del turno.')
+      return
+    }
+
     setEnviando(true)
 
     if (tipo === 'inicio_turno' && turno.responsable_id) {
@@ -180,23 +195,42 @@ export function BitacoraFormPage() {
         <form className="bitacora__form" onSubmit={manejarEnvio}>
           {turno.responsable_id && turno.inspectores.length > 1 && (
             <fieldset className="bitacora__asistencia">
-              <legend>Lista de asistencia</legend>
+              <legend>
+                Lista de asistencia <span className="bitacora__asistencia-obligatoria">(obligatorio)</span>
+              </legend>
               <ul className="bitacora__asistencia-lista">
-                {turno.inspectores.map((integrante) => (
-                  <li key={integrante.inspector_id}>
-                    <label className="bitacora__asistencia-item">
-                      <input
-                        type="checkbox"
-                        checked={asistencia[integrante.inspector_id] ?? true}
-                        onChange={alternarAsistencia(integrante.inspector_id)}
-                      />
-                      <span>
+                {turno.inspectores.map((integrante) => {
+                  const valor = asistencia[integrante.inspector_id] ?? null
+
+                  return (
+                    <li key={integrante.inspector_id} className="bitacora__asistencia-item">
+                      <span className="bitacora__asistencia-nombre">
                         {integrante.nombre_completo}
                         {integrante.inspector_id === profile.id ? ' (tú)' : ''}
                       </span>
-                    </label>
-                  </li>
-                ))}
+                      <div className="bitacora__asistencia-opciones">
+                        <button
+                          type="button"
+                          className={`bitacora__asistencia-boton${
+                            valor === true ? ' bitacora__asistencia-boton--presente-activo' : ''
+                          }`}
+                          onClick={marcarAsistencia(integrante.inspector_id, true)}
+                        >
+                          Presente
+                        </button>
+                        <button
+                          type="button"
+                          className={`bitacora__asistencia-boton${
+                            valor === false ? ' bitacora__asistencia-boton--ausente-activo' : ''
+                          }`}
+                          onClick={marcarAsistencia(integrante.inspector_id, false)}
+                        >
+                          Ausente
+                        </button>
+                      </div>
+                    </li>
+                  )
+                })}
               </ul>
             </fieldset>
           )}
@@ -263,7 +297,7 @@ export function BitacoraFormPage() {
             onChange={actualizarCampo('incidencias')}
           />
 
-          <Button type="submit" anchoCompleto disabled={enviando}>
+          <Button type="submit" anchoCompleto disabled={enviando || !asistenciaCompleta}>
             {enviando ? 'Guardando…' : 'Guardar Bitácora'}
           </Button>
         </form>

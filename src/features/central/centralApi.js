@@ -39,38 +39,60 @@ export const CAMPOS_TURNO =
   'kilometraje_final_en, responsable_id, responsable:responsable_id(id, nombre_completo), ' +
   'vehiculo:vehiculo_id(id, patente, tipo))'
 
-export const TURNOS_POR_PAGINA = 20
+export const TURNOS_POR_PAGINA = 10
 
-export async function listarTurnos({ pagina = 1, busqueda = '' } = {}) {
-  let consulta = supabase
-    .from('turnos')
-    .select(CAMPOS_TURNO, { count: 'exact' })
-    .order('inicio_programado', { ascending: false })
+/** Rango UTC [inicio, fin) del día calendario indicado, en hora local del navegador. */
+function rangoDelDia(fecha) {
+  const inicio = new Date(`${fecha}T00:00:00`)
+  const fin = new Date(`${fecha}T00:00:00`)
+  fin.setDate(fin.getDate() + 1)
+  return { inicio: inicio.toISOString(), fin: fin.toISOString() }
+}
 
-  // Filtrar por búsqueda en inspectores (nombre_completo dentro de turno_inspectores)
-  // Como no se puede filtrar directamente en relaciones, traemos todos y filtramos en JS
-  // para pequeños datasets. Si crece mucho, considerar una vista o función en Postgres.
-  if (!busqueda) {
-    const desde = (pagina - 1) * TURNOS_POR_PAGINA
-    const hasta = desde + TURNOS_POR_PAGINA
-    consulta = consulta.range(desde, hasta - 1)
+export async function listarTurnos({ pagina = 1, busqueda = '', fecha = '' } = {}) {
+  const desde = (pagina - 1) * TURNOS_POR_PAGINA
+  const hasta = desde + TURNOS_POR_PAGINA - 1
+
+  let consulta = supabase.from('turnos').select(CAMPOS_TURNO, { count: 'exact' })
+
+  const termino = busqueda.trim()
+  if (termino) {
+    // El nombre del inspector vive en una tabla relacionada: se resuelve en
+    // dos pasos (en vez de un filtro anidado) para no duplicar turnos cuando
+    // más de un integrante coincide con la búsqueda.
+    const { data: coincidencias, error: errorInspectores } = await supabase
+      .from('profiles')
+      .select('id')
+      .eq('role', 'inspector')
+      .ilike('nombre_completo', `%${termino}%`)
+
+    if (errorInspectores) return { data: [], error: errorInspectores, count: 0 }
+    if (coincidencias.length === 0) return { data: [], error: null, count: 0 }
+
+    const { data: asignaciones, error: errorAsignaciones } = await supabase
+      .from('turno_inspectores')
+      .select('turno_id')
+      .in(
+        'inspector_id',
+        coincidencias.map((inspector) => inspector.id),
+      )
+
+    if (errorAsignaciones) return { data: [], error: errorAsignaciones, count: 0 }
+
+    const turnoIds = [...new Set(asignaciones.map((asignacion) => asignacion.turno_id))]
+    if (turnoIds.length === 0) return { data: [], error: null, count: 0 }
+
+    consulta = consulta.in('id', turnoIds)
+  }
+
+  if (fecha) {
+    const { inicio, fin } = rangoDelDia(fecha)
+    consulta = consulta.gte('inicio_programado', inicio).lt('inicio_programado', fin)
   }
 
   const { data, error, count } = await consulta
-
-  if (busqueda && data) {
-    const filtrados = data.filter((turno) =>
-      turno.inspectores.some((asignacion) =>
-        asignacion.inspector?.nombre_completo.toLowerCase().includes(busqueda.toLowerCase()),
-      ),
-    )
-
-    const desde = (pagina - 1) * TURNOS_POR_PAGINA
-    const hasta = desde + TURNOS_POR_PAGINA
-    const paginados = filtrados.slice(desde, hasta)
-
-    return { data: paginados, error, count: filtrados.length }
-  }
+    .order('inicio_programado', { ascending: false })
+    .range(desde, hasta)
 
   return { data: data ?? [], error, count: count ?? 0 }
 }

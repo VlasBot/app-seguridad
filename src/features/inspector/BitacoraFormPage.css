@@ -32,6 +32,11 @@
   color: var(--color-on-surface-variant);
 }
 
+.bitacora__asistencia-obligatoria {
+  font-weight: 400;
+  color: var(--color-error);
+}
+
 .bitacora__asistencia-lista {
   display: flex;
   flex-direction: column;
@@ -41,18 +46,46 @@
 
 .bitacora__asistencia-item {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
+  justify-content: space-between;
   gap: var(--space-sm);
   padding: var(--space-sm) var(--space-md);
   border: 0.1rem solid var(--color-outline-variant);
   border-radius: var(--radius-default);
   background-color: var(--color-surface-container-lowest);
-  cursor: pointer;
 }
 
-.bitacora__asistencia-item input {
-  width: 1.8rem;
-  height: 1.8rem;
-  accent-color: var(--color-secondary-container);
+.bitacora__asistencia-nombre {
+  font-size: var(--fs-body-md);
+  color: var(--color-on-surface);
+}
+
+.bitacora__asistencia-opciones {
+  display: flex;
+  gap: var(--space-xs);
+}
+
+.bitacora__asistencia-boton {
+  padding: var(--space-xs) var(--space-md);
+  border-radius: var(--radius-full);
+  border: 0.1rem solid var(--color-outline-variant);
+  background-color: transparent;
+  color: var(--color-on-surface-variant);
+  font-size: var(--fs-label-md);
+  font-weight: 700;
   cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.bitacora__asistencia-boton--presente-activo {
+  border-color: var(--color-accent-positivo-dim);
+  background-color: rgba(128, 188, 0, 0.15);
+  color: var(--color-accent-positivo-dim);
+}
+
+.bitacora__asistencia-boton--ausente-activo {
+  border-color: var(--color-error);
+  background-color: var(--color-error-container);
+  color: var(--color-on-error-container);
 }
