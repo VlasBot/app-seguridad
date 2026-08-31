@@ -8,12 +8,7 @@ import { Spinner } from '../../components/ui/Spinner'
 import { useAuth } from '../../hooks/useAuth'
 import { useToast } from '../../hooks/useToast'
 import { formatearKilometraje } from '../../utils/kilometraje'
-import {
-  ESTADOS_VEHICULO,
-  ETIQUETAS_ESTADO_VEHICULO,
-  ESTADOS_RADIO,
-  ETIQUETAS_ESTADO_RADIO,
-} from '../shared/procedimientos.constants'
+import { ESTADOS_RADIO, ETIQUETAS_ESTADO_RADIO } from '../shared/procedimientos.constants'
 import { traducirErrorSupabase } from '../shared/errorMessages'
 import {
   obtenerTurnoVigente,
@@ -37,7 +32,7 @@ export function BitacoraFormPage() {
   const [enviando, setEnviando] = useState(false)
   const [form, setForm] = useState({
     vehiculo_id: '',
-    estado_vehiculo_reportado: 'disponible',
+    estado_vehiculo_reportado: '',
     kilometraje_reportado: '',
     estado_radio: 'operativa',
     observaciones_radio: '',
@@ -342,14 +337,13 @@ export function BitacoraFormPage() {
             </>
           )}
 
-          <SelectField
-            label="Estado del vehículo"
+          <InputField
+            label="Estado de los vehículos"
+            as="textarea"
+            rows="3"
             value={form.estado_vehiculo_reportado}
             onChange={actualizarCampo('estado_vehiculo_reportado')}
-            opciones={ESTADOS_VEHICULO.map((estado) => ({
-              value: estado,
-              label: ETIQUETAS_ESTADO_VEHICULO[estado],
-            }))}
+            ayuda="Describe el estado de cada vehículo del turno (rayones, fallas, etc.). Déjalo en blanco si no hay novedades."
           />
 
           <SelectField

@@ -6,7 +6,7 @@ import { EmptyState } from '../../components/ui/EmptyState'
 import { useToast } from '../../hooks/useToast'
 import { formatearFechaHora } from '../../utils/date'
 import { formatearKilometraje } from '../../utils/kilometraje'
-import { ETIQUETAS_ESTADO_VEHICULO, ETIQUETAS_ESTADO_RADIO } from '../shared/procedimientos.constants'
+import { ETIQUETAS_ESTADO_RADIO } from '../shared/procedimientos.constants'
 import { traducirErrorSupabase } from '../shared/errorMessages'
 import { listarBitacorasDeTurno } from './centralApi'
 import './BitacorasTurnoModal.css'
@@ -147,16 +147,18 @@ export function BitacorasTurnoModal({ turno, onCerrar }) {
                 </Dato>
 
                 {bitacora.tipo === 'inicio_turno' && (
-                  <>
-                    <Dato etiqueta="Estado del vehículo">
-                      {ETIQUETAS_ESTADO_VEHICULO[bitacora.estado_vehiculo_reportado] ?? '—'}
-                    </Dato>
-                    <Dato etiqueta="Estado de la radio">
-                      {ETIQUETAS_ESTADO_RADIO[bitacora.estado_radio] ?? '—'}
-                    </Dato>
-                  </>
+                  <Dato etiqueta="Estado de la radio">
+                    {ETIQUETAS_ESTADO_RADIO[bitacora.estado_radio] ?? '—'}
+                  </Dato>
                 )}
               </div>
+
+              {bitacora.tipo === 'inicio_turno' && bitacora.estado_vehiculo_reportado && (
+                <div className="bitacoras__texto">
+                  <span className="bitacoras__dato-etiqueta">Estado de los vehículos</span>
+                  <p>{bitacora.estado_vehiculo_reportado}</p>
+                </div>
+              )}
 
               {bitacora.tipo === 'inicio_turno' && bitacora.observaciones_radio && (
                 <div className="bitacoras__texto">

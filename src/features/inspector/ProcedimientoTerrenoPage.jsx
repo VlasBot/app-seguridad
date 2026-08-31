@@ -11,7 +11,12 @@ import { useToast } from '../../hooks/useToast'
 import { TIPOS_PROCEDIMIENTO, SECTORES } from '../shared/procedimientos.constants'
 import { traducirErrorSupabase } from '../shared/errorMessages'
 import { FotoUploader } from '../../components/ui/FotoUploader'
-import { obtenerTurnoVigente, crearProcedimientoTerreno, subirFotoProcedimiento } from './inspectorApi'
+import {
+  obtenerTurnoVigente,
+  obtenerBitacorasDeTurno,
+  crearProcedimientoTerreno,
+  subirFotoProcedimiento,
+} from './inspectorApi'
 import './ProcedimientoTerrenoPage.css'
 
 export function ProcedimientoTerrenoPage() {
@@ -30,10 +35,17 @@ export function ProcedimientoTerrenoPage() {
   })
 
   const [cargando, setCargando] = useState(true)
+  const [yaInicioTurno, setYaInicioTurno] = useState(false)
 
   useEffect(() => {
-    obtenerTurnoVigente(profile.id).then(({ data }) => {
+    obtenerTurnoVigente(profile.id).then(async ({ data }) => {
       setTurno(data)
+
+      if (data) {
+        const { data: bitacoras } = await obtenerBitacorasDeTurno(data.id, profile.id)
+        setYaInicioTurno(bitacoras.some((bitacora) => bitacora.tipo === 'inicio_turno'))
+      }
+
       setCargando(false)
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -92,6 +104,15 @@ export function ProcedimientoTerrenoPage() {
       <div className="procedimiento-terreno">
         <h1 className="procedimiento-terreno__titulo">Nuevo Procedimiento</h1>
         <EmptyState mensaje="Sólo el responsable de tu turno puede registrar procedimientos." />
+      </div>
+    )
+  }
+
+  if (!yaInicioTurno) {
+    return (
+      <div className="procedimiento-terreno">
+        <h1 className="procedimiento-terreno__titulo">Nuevo Procedimiento</h1>
+        <EmptyState mensaje="Debes iniciar tu turno antes de registrar procedimientos." />
       </div>
     )
   }
