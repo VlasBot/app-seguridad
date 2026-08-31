@@ -4,6 +4,7 @@ const formateadorFechaHora = new Intl.DateTimeFormat('es-CL', {
   year: 'numeric',
   hour: '2-digit',
   minute: '2-digit',
+  hour12: false,
 })
 
 const formateadorFecha = new Intl.DateTimeFormat('es-CL', {
