@@ -103,6 +103,20 @@ export async function registrarAsistenciaTurno(turnoId, asistencia) {
 }
 
 /**
+ * El responsable declara el kilometraje de salida de cada vehículo del
+ * turno al iniciar. Va por función porque un inspector no puede escribir
+ * directamente en las asignaciones del turno.
+ */
+export async function registrarKilometrajeInicioTurno(turnoId, kilometrajes) {
+  const { error } = await supabase.rpc('registrar_kilometraje_inicio_turno', {
+    p_turno_id: turnoId,
+    p_kilometrajes: kilometrajes,
+  })
+
+  return { error }
+}
+
+/**
  * El turno es grupal: queda "en curso" cuando alguien registra su bitácora de
  * inicio y "finalizado" sólo cuando todos los inspectores cerraron la suya.
  * El cálculo vive en la base de datos porque un inspector no puede leer las
