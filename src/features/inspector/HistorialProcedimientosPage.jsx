@@ -9,6 +9,7 @@ import { useAuth } from '../../hooks/useAuth'
 import { useToast } from '../../hooks/useToast'
 import { formatearFechaHora } from '../../utils/date'
 import { traducirErrorSupabase } from '../shared/errorMessages'
+import { ETIQUETAS_ORIGEN_PROCEDIMIENTO } from '../shared/procedimientos.constants'
 import { DetalleProcedimientoModal } from '../shared/DetalleProcedimientoModal'
 import { listarProcedimientosDelInspector, PROCEDIMIENTOS_POR_PAGINA } from './inspectorApi'
 import './HistorialProcedimientosPage.css'
@@ -18,6 +19,7 @@ const COLUMNAS = [
   { key: 'tipo', titulo: 'Tipo' },
   { key: 'sector', titulo: 'Sector' },
   { key: 'direccion', titulo: 'Ubicación' },
+  { key: 'origen', titulo: 'Origen' },
   { key: 'fecha', titulo: 'Fecha' },
   { key: 'estado', titulo: 'Estado' },
   { key: 'detalle', titulo: 'Detalle' },
@@ -69,7 +71,7 @@ export function HistorialProcedimientosPage() {
       <div className="historial__cabecera">
         <h1 className="historial__titulo">Historial de Procedimientos</h1>
         <p className="historial__subtitulo">
-          Aquí puedes consultar los procedimientos que has registrado.
+          Procedimientos que has registrado y los que Central te asignó.
         </p>
       </div>
 
@@ -106,6 +108,7 @@ export function HistorialProcedimientosPage() {
                 <td data-label="Tipo">{procedimiento.tipo}</td>
                 <td data-label="Sector">{procedimiento.sector}</td>
                 <td data-label="Ubicación">{procedimiento.direccion}</td>
+                <td data-label="Origen">{ETIQUETAS_ORIGEN_PROCEDIMIENTO[procedimiento.origen] ?? '—'}</td>
                 <td data-label="Fecha">{formatearFechaHora(procedimiento.fecha_procedimiento)}</td>
                 <td data-label="Estado">
                   <StatusChip estado={procedimiento.estado} />

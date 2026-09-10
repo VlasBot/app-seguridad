@@ -9,9 +9,9 @@ export { subirFotoProcedimiento } from '../shared/fotosApi'
 export const PROCEDIMIENTOS_POR_PAGINA = 10
 
 /**
- * Lista únicamente los procedimientos creados por el inspector indicado.
- * El filtro por `registrado_por` acompaña a la política RLS, que ya impide
- * a un inspector leer procedimientos de otros inspectores.
+ * Lista los procedimientos del inspector: los que él mismo registró y los
+ * que Central creó asignándolo como oficial a cargo. El filtro acompaña a
+ * la política RLS, que ya permite ambos casos y bloquea el resto.
  */
 export async function listarProcedimientosDelInspector(inspectorId, { pagina = 1, busqueda = '' } = {}) {
   const desde = (pagina - 1) * PROCEDIMIENTOS_POR_PAGINA
@@ -20,7 +20,7 @@ export async function listarProcedimientosDelInspector(inspectorId, { pagina = 1
   const consulta = supabase
     .from('procedimientos')
     .select(CAMPOS_PROCEDIMIENTO, { count: 'exact' })
-    .eq('registrado_por', inspectorId)
+    .or(`registrado_por.eq.${inspectorId},oficial_id.eq.${inspectorId}`)
 
   const { data, error, count } = await aplicarBusquedaProcedimientos(consulta, busqueda)
     .order('fecha_procedimiento', { ascending: false })

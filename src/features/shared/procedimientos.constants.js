@@ -57,3 +57,8 @@ export const ETIQUETAS_ROL = {
   central: 'Central',
   inspector: 'Inspector',
 }
+
+export const ETIQUETAS_ORIGEN_PROCEDIMIENTO = {
+  llamado_central: 'Asignado por Central',
+  terreno_inspector: 'Registrado en terreno',
+}
