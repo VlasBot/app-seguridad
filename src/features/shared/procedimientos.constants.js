@@ -20,6 +20,8 @@ export const TIPOS_PROCEDIMIENTO = [
   'Colaboracion a Muni.',
   'Orien. y Apoyo comun.',
   'MIXTA',
+  'Agua en la vía pública',
+  'Corte de energía eléctrica',
   'Otro',
 ]
 
